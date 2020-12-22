@@ -6,7 +6,7 @@ version: '3'
 services:
   # Database
   db:
-    image: mysql:5.7
+    image: mysql:latest
     volumes:
       - db_data:/var/lib/mysql
     environment:
@@ -38,6 +38,7 @@ services:
     volumes: ['./:/var/www/html']
     environment:
       WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
     networks:
