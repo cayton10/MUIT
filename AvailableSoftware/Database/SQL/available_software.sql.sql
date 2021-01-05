@@ -145,7 +145,7 @@ ALTER TABLE `department`
 -- Indexes for table `dept_software`
 --
 ALTER TABLE `dept_software`
-  ADD PRIMARY KEY (`despt_soft_id`),
+  ADD PRIMARY KEY (`dept_soft_id`),
   ADD KEY `FK_ds_dept_id` (`dept_id`),
   ADD KEY `FK_ds_soft_id` (`soft_id`);
 
