@@ -7,12 +7,21 @@
  * Version: 1.0
  *  
  */
-//echo "Hello World!";
 
-// exit if file is called directly
-if( ! defined('ABSPATH')) 
-{
-    exit;
-}
+    // exit if file is called directly
+    if( ! defined('ABSPATH')) 
+    {
+        exit;
+    }
+
+
+    echo plugin_dir_path(__FILE__) . 'admin/admin_menu.php';
+    // if admin area
+    if(is_admin())
+    {
+        //include dependencies administration dependencies
+        require_once plugin_dir_path( __FILE__ ) . 'admin/admin-menu.php';
+        require_once plugin_dir_path( __FILE__ ) . 'admin/settings-page.php';
+    }
 
 ?>

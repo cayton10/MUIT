@@ -1,5 +1,6 @@
 **/.DS_Store
 
+
 AvailableSoftware/db_data
 
 AvailableSoftware/Development/wp-admin
@@ -9,3 +10,5 @@ AvailableSoftware/Development/wp-includes
 
 AvailableSoftware/Development/*
 !AvailableSoftware/Development/docker-compose.yml
+
+/Tutorial
