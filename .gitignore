@@ -1,14 +1,37 @@
 **/.DS_Store
 
-
+#Ignore the persisten db data directory. (DIR needed for docker setup)
 AvailableSoftware/db_data
 
+#Ignore all unnecessary WP installation files
 AvailableSoftware/Development/wp-admin
 AvailableSoftware/Development/wp-content/plugins/akismet
 AvailableSoftware/Development/wp-content/themes
 AvailableSoftware/Development/wp-includes
 
-AvailableSoftware/Development/*
+#Don't ignore the admin page functions within the admin directory
+!AvailableSoftware/Development/wp-content/plugins/MUAvailSoft/admin/admin-menu.php
+
+#Ignore WP Installation files in development directory
+AvailableSoftware/Development/.htaccess
+AvailableSoftware/Development/index.php
+AvailableSoftware/Development/license.txt
+AvailableSoftware/Development/readme.html
+AvailableSoftware/Development/wp-activate.php
+AvailableSoftware/Development/wp-blog-header.php
+AvailableSoftware/Development/wp-comments-post.php
+AvailableSoftware/Development/wp-config-sample.php
+AvailableSoftware/Development/wp-config.php
+AvailableSoftware/Development/wp-cron.php
+AvailableSoftware/Development/wp-links-opml.php
+AvailableSoftware/Development/wp-load.php
+AvailableSoftware/Development/wp-login.php
+AvailableSoftware/Development/wp-mail.php
+AvailableSoftware/Development/wp-settings.php
+AvailableSoftware/Development/wp-signup.php
+AvailableSoftware/Development/wp-trackback.php
+AvailableSoftware/Development/xmlrpc.php
 !AvailableSoftware/Development/docker-compose.yml
+
 
 /Tutorial

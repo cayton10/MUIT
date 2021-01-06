@@ -15,7 +15,7 @@
     }
 
 
-    echo plugin_dir_path(__FILE__) . 'admin/admin_menu.php';
+
     // if admin area
     if(is_admin())
     {
