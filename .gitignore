@@ -1,10 +1,11 @@
 **/.DS_Store
 
-#ignore everything
-*
+AvailableSoftware/db_data
 
-#except
-!.gitignore
-!README.md
-!*AvailableSofware/Database/
-!*AvailableSofware/Development/wp-content/plugins/*
+AvailableSoftware/Development/wp-admin
+AvailableSoftware/Development/wp-content/plugins/akismet
+AvailableSoftware/Development/wp-content/themes
+AvailableSoftware/Development/wp-includes
+
+AvailableSoftware/Development/*
+!AvailableSoftware/Development/docker-compose.yml
