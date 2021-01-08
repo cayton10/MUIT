@@ -6,7 +6,7 @@
         exit;
     }
 
-    
+
     // display the plugin settings page
     function muavailsoft_display_settings_page() {
         
@@ -17,15 +17,15 @@
         
         <div class="wrap">
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-            <form action="options.php" method="post">
+            <form action="softwareData.php" method="post">
                 
                 <?php
                 
                 // output security fields
-                settings_fields( 'myplugin_options' );
+                settings_fields( 'muavailsoft_data' );
                 
                 // output setting sections
-                do_settings_sections( 'myplugin' );
+                do_settings_sections( 'muavailsoft' );
                 
                 // submit button
                 submit_button();
