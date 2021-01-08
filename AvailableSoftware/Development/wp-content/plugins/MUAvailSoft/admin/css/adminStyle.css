@@ -1,6 +1,20 @@
 
 
 
+
+
 .softwareInput{
     width: 20vw;
+}
+
+
+.softwareTextArea{
+    width: 20vw;
+    height: 200px;
+}
+
+/* Add software admin page grid styling */
+.addSoftwareGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }

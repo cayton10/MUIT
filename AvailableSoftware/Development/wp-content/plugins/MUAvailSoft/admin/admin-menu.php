@@ -41,6 +41,11 @@
                 string      $menu_slug,
                 callable    $function = ''
         */
+
+        /**
+         * Add software menu page
+         */
+
         add_submenu_page(
             'MUAvailSoft', //Parent slug
             'Add Software Package', //page title
@@ -50,6 +55,10 @@
             'muavailsoft_add_software'
         );
 
+        /**
+         * Edit software menu page
+         */
+
         add_submenu_page(
             'MUAvailSoft',
             'Edit Software Package',
@@ -58,6 +67,10 @@
             'EditSoftware',
             'muavailsoft_edit_software'
         );
+
+        /**
+         * Remove software menu page
+         */
 
         add_submenu_page(
             'MUAvailSoft',
