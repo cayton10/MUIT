@@ -17,11 +17,11 @@
         
         <div class="wrap">
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-            <form action="softwareData.php" method="post">
+            <form action="" method="post" id='addSoftwareForm'>
                 <div class='addSoftwareGrid'>
                 <!-- Software input section -->
                     <div class='softwareGridColumn'>
-                        <h2><label for='softManufacturer'>Software Manufacturer</label></h2>
+                        <h2><label for='softwareManufac'>Software Manufacturer</label></h2>
                             <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' required></input>
                         <h2><label for='softwareName'>Software Package Name</label></h2>
                             <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' required></input>
@@ -33,7 +33,7 @@
                             <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.'></textarea>
                         <h2><label for='softwareDownload'>Software Download Location</label></h2>
                             <input id='softwareDownload' class='softwareInput' placeholder='Preferably a link to download location.'></input>
-                            <input type='submit'></input>
+                            <input type='submit' id='submitAddSoftware'></input>
                     </div>
 
                 <!-- User information section -->
@@ -74,6 +74,7 @@
         </div>
         
         <?php
+
 	
 }
 ?>

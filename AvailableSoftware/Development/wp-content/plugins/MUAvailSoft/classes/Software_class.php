@@ -26,6 +26,17 @@
 
             return $results;
         }
+
+
+        /**
+         * addSoftware(string, string, string, double, string, string);
+         * Takes 6 parameters and returns the auto incremented id after adding the software
+         * package to DB.
+         * 
+         * Ex:
+         *      soft = software->addSoftware(manufacturer, name, category, price, description, location)
+         */
+        public function addSoftware($manu, $name, $cat, $price, $desc, $location)
     }
 
 ?>

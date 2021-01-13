@@ -52,7 +52,6 @@
         wp_register_script( 'custom_wp_admin_js', plugin_dir_url( __FILE__ ) . 'admin/js/adminjs.js');
         wp_enqueue_script( 'custom_wp_admin_js');
         
-        
     }
 
     //Hook to implement adding scripts and styles to admin page.
