@@ -3,13 +3,14 @@
 /* -------------------------------------------------------------------------- */
 /*                CLASS ACCESSES SOFTWARE TABLE OF WP DATABASE                */
 /* -------------------------------------------------------------------------- */
+    
 
-    class Software extends DB
+    class Software 
     {
         //Construct the parent database class so we can access its' functions
         public function __construct()
         {
-            parent::__construct();
+            
         }
 
         
@@ -17,12 +18,15 @@
         //Test function to grab all software dummy data
         public function getSoftware()
         {
+            //Declare global wordpress database class
+            global $wpdb;
+
             $query = "";
 
             $query = "SELECT *
                         FROM software";
             
-            $results = $this->get_results($query);
+            $results = $wpdb->get_results($query);
 
             return $results;
         }
@@ -37,6 +41,9 @@
          *      soft = software->addSoftware(manufacturer, name, category, price, description, location)
          */
         public function addSoftware($manu, $name, $cat, $price, $desc, $location)
+        {
+            
+        }
     }
 
 ?>

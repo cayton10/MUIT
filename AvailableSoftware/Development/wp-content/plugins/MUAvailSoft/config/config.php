@@ -1,16 +1,27 @@
 <?php
-//CREATE DB CONNECTION
-    define('DB_HOST', 'db:3306');
-    define('DB_USER', 'wordpress');
-    define('DB_PASS', 'wordpress');
-    define('DB_NAME', 'wordpress');
 
+    //REQUIRE WP-CONFIG FILE TO GET DB CONSTANTS
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/wp-config.php');
+    
+    //CREATE DB CONNECTION
+    $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD);
+    mysqli_select_db($connection, DB_NAME);
+   
     define('DISPLAY_DEBUG', true);
     define('PATH_TO_CLASSES', dirname(__DIR__) . '/classes/');
-    // PHP 7 way to do autoload of classes
-    spl_autoload_register(function($class)
-    {
-        include PATH_TO_CLASSES . $class . '_class.php';
-    });
+    
 
+
+    spl_autoload_register(function($class) {
+
+        
+        $filePathName = PATH_TO_CLASSES . $class . '_class.php';
+
+        //Error handling to not go running for all classes across WP installation
+        if(file_exists($filePathName))
+        {
+            include $filePathName;
+        }
+        
+    });
 ?>
