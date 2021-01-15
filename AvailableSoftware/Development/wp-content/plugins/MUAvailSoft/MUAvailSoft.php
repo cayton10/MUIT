@@ -24,6 +24,8 @@
         require_once plugin_dir_path( __FILE__ ) . 'admin/settings-page.php';
         require_once plugin_dir_path( __FILE__ ) . 'admin/addSoftware.php';
         require_once plugin_dir_path( __FILE__ ) . 'config/config.php'; //For touching DB
+        //Include dependency for ajax handler functions
+        require_once plugin_dir_path( __FILE__ ) . 'admin/ajax/ajax_functions.php';
     }
 
 
@@ -43,10 +45,6 @@
         //Adds style sheet
         wp_register_style( 'custom_wp_admin_css', plugin_dir_url( __FILE__ ) . 'admin/css/adminStyle.css');
         wp_enqueue_style( 'custom_wp_admin_css' );
-
-        //From Google's jQuery CDN - Used because was uncertain whether WP provided jQuery would work
-        wp_register_script( 'custom_wp_admin_jquery' , 'https://ajax.googleapis.com/ajax/libs/d3js/6.3.1/d3.min.js');
-        wp_enqueue_script( 'custom_wp_admin_jquery' );
 
         //Custom js
         wp_register_script( 'custom_wp_admin_js', plugin_dir_url( __FILE__ ) . 'admin/js/adminjs.js');

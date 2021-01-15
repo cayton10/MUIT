@@ -6,6 +6,7 @@
         exit;
     }
 
+    
 
     // display the plugin settings page
     function muavailsoft_add_software() {
@@ -22,13 +23,13 @@
                 <!-- Software input section -->
                     <div class='softwareGridColumn'>
                         <h2><label for='softwareManufac'>Software Manufacturer</label></h2>
-                            <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' required></input>
+                            <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.'></input>
                         <h2><label for='softwareName'>Software Package Name</label></h2>
-                            <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' required></input>
+                            <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop'></input>
                         <h2><label for='softwareCat'>Software Category</label></h2>
-                            <input id='softwareCat' class='softwareInput' placeholder='I.E. Antivirus, Word Processor, etc.' required></input>
+                            <input id='softwareCat' class='softwareInput' placeholder='I.E. Antivirus, Word Processor, etc.'></input>
                         <h2><label for='softwarePrice'>Software Package Price</label></h2>
-                            <input id='softwarePrice' class='softwareInput' placeholder='199.99' type='number'></input>
+                            <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number'></input>
                         <h2><label for='softwareDesc'>Software Package Description</label></h2>
                             <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.'></textarea>
                         <h2><label for='softwareDownload'>Software Download Location</label></h2>
