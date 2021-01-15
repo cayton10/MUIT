@@ -6,6 +6,10 @@ $(document).ready(function(){
     //alert("Works");
 
 
+    /**
+     * FUNCTION TO ADD SOFTWARE TO DATABASE VIA AJAX
+     * This function is called from the plugin 'addSoftware' admin page
+     */
     $('#addSoftwareForm').on('submit', function(e){
 
 
@@ -19,7 +23,6 @@ $(document).ready(function(){
         var desc = $('#softwareDesc').val();
         var download = $('#softwareDownload').val();
 
-        alert(manu);
 
         //Construct the ajax request and fire 
         $.ajax({

@@ -13,6 +13,7 @@
     
     foreach($software as $package)
     {
+        echo "<pre>";
         print_r($package);
     }
     
