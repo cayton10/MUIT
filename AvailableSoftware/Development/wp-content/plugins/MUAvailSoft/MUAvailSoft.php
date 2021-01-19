@@ -42,9 +42,11 @@
 
     function wpdocs_enqueue_custom_admin_style() {
 
+        //Prevents css from caching
+        $rand = rand(1, 999999999999);
         //Adds style sheet
         wp_register_style( 'custom_wp_admin_css', plugin_dir_url( __FILE__ ) . 'admin/css/adminStyle.css');
-        wp_enqueue_style( 'custom_wp_admin_css' );
+        wp_enqueue_style( 'custom_wp_admin_css', get_stylesheet_uri(), '', $rand );
 
         //Custom js
         wp_register_script( 'custom_wp_admin_js', plugin_dir_url( __FILE__ ) . 'admin/js/adminjs.js');

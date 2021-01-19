@@ -18,3 +18,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
+
+/* Style for alternative software added buttons */
+.cancelAlt{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #dc091d;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 15;
+}
