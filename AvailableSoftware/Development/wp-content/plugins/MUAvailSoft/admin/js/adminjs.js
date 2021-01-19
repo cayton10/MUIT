@@ -6,6 +6,10 @@ $(document).ready(function(){
     //alert("Works");
 
 
+/* -------------------------------------------------------------------------- */
+/*                      SUBMIT ADD SOFTWARE FORM FUNCTION                     */
+/* -------------------------------------------------------------------------- */
+
     /**
      * FUNCTION TO ADD SOFTWARE TO DATABASE VIA AJAX
      * This function is called from the plugin 'addSoftware' admin page
@@ -15,7 +19,18 @@ $(document).ready(function(){
 
         e.preventDefault();
 
-        //Store data from the addSoftware page form
+        //Primary array to send to DB
+        var packageArray = [];
+
+        //Declare all necessary arrays to store information
+        var softwareArray = [];
+        var alternativesArray = [];
+        var searchTermsArray = [];
+        var users = [];
+        var operatingSystem = [];
+
+/* ------------------------ GET SOFTWARE INFORMATION ------------------------ */
+
         var manu = $('#softwareManufacturer').val();
         var name = $('#softwareName').val();
         var cat = $('#softwareCat').val();
@@ -23,7 +38,67 @@ $(document).ready(function(){
         var desc = $('#softwareDesc').val();
         var download = $('#softwareDownload').val();
 
+        softwareArray.push({
+            manu: manu,
+            name: name,
+            cat: cat,
+            price: price,
+            desc: desc,
+            download: download
+        });
+        
+        //Load the software information into the main 'package' array at software index
+        packageArray['software'] = softwareArray;
+        
 
+/* -------------------- GET ALTERNATIVE SOFTWARE EXAMPLES ------------------- */
+
+        var $alts = $('.altButton');
+
+        //If alternatives have been listed, create an array of appropriate info
+        if($alts.length)
+        {
+            $('.altButton').each(function(){
+                alternativesArray.push($(this).data('name'));
+            });
+
+            packageArray['alternatives'] = alternativesArray;
+        };
+
+        
+/* ------------------ GET SEARCH TERMS FOR ENTERED SOFTWARE ----------------- */
+
+        var $terms = $('.termButton');
+
+        //If search terms have been listed, create an array of appropriate info
+        if($terms.length)
+        {
+            $('.termButton').each(function(){
+                searchTermsArray.push($(this).data('term'));
+            });
+
+            packageArray['searchTerms'] = searchTermsArray;
+        };
+
+/* --------------------------- GET AVAILABLE USERS -------------------------- */
+
+        $('#userCheckBoxes input[type="checkbox"]:checked').each(function(){
+            users.push($(this).val());
+        });
+
+        //Add the users array to the package to send
+        packageArray['users'] = users;
+/* ------------------------- GET OPERATING SYSTEM(S) ------------------------ */
+
+        $('#osCheckBoxes input[type="checkbox"]:checked').each(function(){
+            operatingSystem.push($(this).val());
+        });
+
+        //Add os array to package to send
+        packageArray['os'] = operatingSystem;
+
+        //Stringify the object array to JSON format
+        var jsonString = JSON.stringify(packageArray);
         //Construct the ajax request and fire 
         $.ajax({
             url: ajaxurl,
@@ -32,13 +107,7 @@ $(document).ready(function(){
             data: 
             {
                 action: "add_software",
-                manufacturer: manu,
-                name: name,
-                cat: cat,
-                price: price,
-                desc: desc,
-                download: download
-
+                info: jsonString
             },
             success: function(response)
             {
@@ -51,6 +120,7 @@ $(document).ready(function(){
                 console.log(xhr.responseText);
             }
         });
+
     });
 
 /* -------------------------------------------------------------------------- */
@@ -70,7 +140,7 @@ $(document).ready(function(){
          var altName = $('#softwareAlternatives').val();
 
          //Append the alternatives div with a button of name corresponding to entered alt
-         $('#alternativeList').append("<li class='altButton' value='" + altName + "'><button type='button' class='button-secondary removeAlt'>" + altName + "  <span class='cancelAlt'>&#x2715<span></button></li>");
+         $('#alternativeList').append("<li class='altButton' data-name='" + altName + "'><button type='button' class='button-secondary removeAlt'>" + altName + "  <span class='cancelAlt'>&#x2715<span></button></li>");
 
          //Clear the input field for next entry
          $('#softwareAlternatives').val('');
@@ -106,7 +176,7 @@ $(document).ready(function(){
 
             //Append the search terms <ul> with a list item button of name corresponding
             //to entered search term
-            $('#searchTermList').append("<li class='altButton' value='" + searchTerm + "'><button type='button' class='button-secondary removeSearchTerm'>" + searchTerm + "   <span class='cancelTerm'>&#x2715<span></button></li>");
+            $('#searchTermList').append("<li class='termButton' data-term='" + searchTerm + "'><button type='button' class='button-secondary removeSearchTerm'>" + searchTerm + "   <span class='cancelTerm'>&#x2715<span></button></li>");
 
             //Clear input field for next entry
             $('#searchTerm').val('');
