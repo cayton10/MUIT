@@ -12,3 +12,7 @@ Created a mock admin page within the plugin directory. Will need to move these f
 #### 1.15.2021
 
 Software packages can be added as tuples to the software table in the WP database via the <strong>Add Software</strong> plugin administrator's page.
+
+#### 1.22.2021
+
+Software packages are being sent to php ajax handler script to process information and upload to database.

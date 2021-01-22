@@ -7,7 +7,7 @@
 
     class Software 
     {
-        //Construct the parent database class so we can access its' functions
+        
         public function __construct()
         {
             
@@ -54,7 +54,10 @@
                 'soft_download' => $location
             );
 
+            //Insert the software package
             $wpdb->insert('software', $data);
+
+            //Return last auto-incremented ID for further data table input
             $lastID = $wpdb->insert_id;
 
             return $lastID;

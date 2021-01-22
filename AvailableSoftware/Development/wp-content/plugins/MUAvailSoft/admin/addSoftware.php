@@ -45,7 +45,7 @@
                                 <input type='checkbox' id='allUsers' name='allUsers' value='all'>
                                 <label for='allUsers'>All Users</label><br>
 
-                                <input type='checkbox' id='studentUsers' name='studentUsers' value='students'>
+                                <input type='checkbox' id='studentUsers' name='studentUsers' value='student'>
                                 <label for='studentUsers'>Students</label><br>
 
                                 <input type='checkbox' id='facultyUsers' name='facultyUsers' value='faculty'>
@@ -73,16 +73,16 @@
                                 <input type='checkbox' id='windows' name='windows' value='windows'>
                                 <label for='windows'>Windows</label><br>
 
-                                <input type='checkbox' id='mac' name='mac'>
+                                <input type='checkbox' id='mac' name='mac' value='mac'>
                                 <label for='mac'>MacOS</label><br>
 
-                                <input type='checkbox' id='linux' name='linux'>
+                                <input type='checkbox' id='linux' name='linux' value='linux'>
                                 <label for='linux'>Linux</label><br>
 
-                                <input type='checkbox' id='ios' name='ios'>
+                                <input type='checkbox' id='ios' name='ios' value='ios'>
                                 <label for='ios'>iOS</label><br>
 
-                                <input type='checkbox' id='android' name='android'>
+                                <input type='checkbox' id='android' name='android' value='android'>
                                 <label for='android'>Android</label><br>
 
                             </div>
@@ -95,6 +95,12 @@
                                 <div>
                                     <ul id='searchTermList'></ul>
                                 </div>
+                            </div>
+
+                <!-- Department Testing field -->
+                        <h2><label for='departmentField'>Available to Department:<label></h2>
+                            <div class='departmentField' id='departmentField'>
+                                <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput'>
                             </div>
                     </div>
                 </div>

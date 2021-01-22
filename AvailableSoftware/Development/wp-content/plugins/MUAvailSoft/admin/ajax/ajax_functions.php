@@ -12,24 +12,44 @@
      */
     function add_software()
     {
+
+        $package = $_POST['data'];
+        //print_r($package);
+
+        $software = $package['software'];
+        $users = $package['users'];
+
+        
         //Store all data sent from form into variables
-        $manu = htmlspecialchars(trim($_POST['manufacturer']));
-        $name = htmlspecialchars(trim($_POST['name']));
-        $cat = htmlspecialchars(trim($_POST['cat']));
-        $price = htmlspecialchars(trim($_POST['price']));
-        $desc = htmlspecialchars(trim($_POST['desc']));
-        $download = htmlspecialchars(trim($_POST['download']));
+        $manu = htmlspecialchars(trim($software['manu']));
+        $name = htmlspecialchars(trim($software['name']));
+        $cat = htmlspecialchars(trim($software['cat']));
+        $price = htmlspecialchars(trim($software['price']));
+        $desc = htmlspecialchars(trim($software['desc']));
+        $download = htmlspecialchars(trim($software['download']));
 
-
+/* --------------------------- ADD SOFTWARE TO DB --------------------------- */
+        
         //Instantiate software object
         $soft = new Software();
 
         //Adds all relevant software information and stores last inserted ID
-        $lastID = $soft->addSoftware($manu, $name, $cat, $price, $desc, $download);
+        $softID = $soft->addSoftware($manu, $name, $cat, $price, $desc, $download);
 
-        //Instaniate NEXT object
+/* ------------------------- ADD SOFTWARE_USER TO DB ------------------------ */
         
-        echo json_encode($lastID);
+        //Instaniate NEXT object
+        $user = new User();
+
+        foreach($users as $key => $value)
+        {
+            //Get the appropriate userID value from the userType string
+            $userID = $user->getUserID($value);
+            
+            //Insert the record for software_user table
+            $user->addSoftwareUser(1, $softID, $userID);
+        }    
+
 
         wp_die();
 

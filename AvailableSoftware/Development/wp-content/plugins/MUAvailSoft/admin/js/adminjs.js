@@ -20,32 +20,24 @@ $(document).ready(function(){
         e.preventDefault();
 
         //Primary array to send to DB
-        var packageArray = [];
+        var packageArray = {};
 
         //Declare all necessary arrays to store information
-        var softwareArray = [];
+        var softwareArray = {};
         var alternativesArray = [];
         var searchTermsArray = [];
         var users = [];
         var operatingSystem = [];
+        var departments = [];
 
 /* ------------------------ GET SOFTWARE INFORMATION ------------------------ */
 
-        var manu = $('#softwareManufacturer').val();
-        var name = $('#softwareName').val();
-        var cat = $('#softwareCat').val();
-        var price = $('#softwarePrice').val();
-        var desc = $('#softwareDesc').val();
-        var download = $('#softwareDownload').val();
-
-        softwareArray.push({
-            manu: manu,
-            name: name,
-            cat: cat,
-            price: price,
-            desc: desc,
-            download: download
-        });
+        softwareArray['manu'] = $('#softwareManufacturer').val();
+        softwareArray['name'] = $('#softwareName').val();
+        softwareArray['cat'] = $('#softwareCat').val();
+        softwareArray['price'] = $('#softwarePrice').val();
+        softwareArray['desc'] = $('#softwareDesc').val();
+        softwareArray['download'] = $('#softwareDownload').val();
         
         //Load the software information into the main 'package' array at software index
         packageArray['software'] = softwareArray;
@@ -97,8 +89,13 @@ $(document).ready(function(){
         //Add os array to package to send
         packageArray['os'] = operatingSystem;
 
-        //Stringify the object array to JSON format
-        var jsonString = JSON.stringify(packageArray);
+/* ----------------------------- GET DEPARTMENT ----------------------------- */
+
+        departments.push($('#departmentName').val());
+
+        packageArray['department'] = departments;
+
+
         //Construct the ajax request and fire 
         $.ajax({
             url: ajaxurl,
@@ -107,7 +104,7 @@ $(document).ready(function(){
             data: 
             {
                 action: "add_software",
-                info: jsonString
+                data: packageArray
             },
             success: function(response)
             {
