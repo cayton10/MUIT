@@ -38,7 +38,7 @@
 
 /* ------------------------- ADD SOFTWARE_USER TO DB ------------------------ */
         
-        //Instaniate NEXT object
+        //Instaniate object of User class
         $user = new User();
 
         foreach($users as $key => $value)
@@ -48,7 +48,10 @@
             
             //Insert the record for software_user table
             $user->addSoftwareUser(1, $softID, $userID);
-        }    
+        }
+        
+/* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
+        
 
 
         wp_die();
