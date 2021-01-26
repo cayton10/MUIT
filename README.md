@@ -16,3 +16,7 @@ Software packages can be added as tuples to the software table in the WP databas
 #### 1.22.2021
 
 Software packages are being sent to php ajax handler script to process information and upload to database.
+
+#### 1.26.2021
+
+All relevant software information except Department can successfully be added to DB. Future meetings needed to determine strict business rules for department and how to proceed.
