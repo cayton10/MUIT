@@ -9,7 +9,7 @@
     
 
     // display the plugin settings page
-    function muavailsoft_add_software() {
+    function muavailsoft_edit_software() {
         
         // check if user is allowed access
         if ( ! current_user_can( 'manage_options' ) ) return;
@@ -23,17 +23,17 @@
                 <!-- Software input section -->
                     <div class='softwareGridColumn'>
                         <h2><label for='softwareManufac'>Software Manufacturer</label></h2>
-                            <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' type='text'></input>
+                            <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' type='text' spellcheck='true' required></input>
                         <h2><label for='softwareName'>Software Package Name</label></h2>
-                            <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' type='text'></input>
+                            <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' type='text' spellcheck='true' required></input>
                         <h2><label for='softwareCat'>Software Category</label></h2>
-                            <input id='softwareCat' class='softwareInput' placeholder='I.E. Antivirus, Word Processor, etc.' type='text'></input>
+                            <input id='softwareCat' class='softwareInput' placeholder='I.E. Antivirus, Word Processor, etc.' type='text' spellcheck="true" required></input>
                         <h2><label for='softwarePrice'>Software Package Price</label></h2>
-                            <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number'></input>
+                            <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number' required></input>
                         <h2><label for='softwareDesc'>Software Package Description</label></h2>
-                            <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.'></textarea>
+                            <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.' spellcheck="true" required></textarea>
                         <h2><label for='softwareDownload'>Software Download Location</label></h2>
-                            <input id='softwareDownload' class='softwareInput' placeholder='Preferably a link to download location.' type='text'></input>
+                            <input id='softwareDownload' class='softwareInput' placeholder='https://portal.azure.com/?Microsoft_Azure_Education_correlationId=22e80e44-4b74-411b-9593-69e7ed40fc2f' type='url'></input>
                             <input type='submit' class='button-primary' id='submitAddSoftware'></input>
                     </div>
 
@@ -42,16 +42,16 @@
                         <h2><label for='userAvailability'>Available to Users</label></h2>
                             <div id='userCheckBoxes' class='userCheckBoxes'>
 
-                                <input type='checkbox' id='allUsers' name='allUsers' value='all' class='userCheck'>
+                                <input type='checkbox' id='allUsers' name='allUsers' value='all'>
                                 <label for='allUsers'>All Users</label><br>
 
-                                <input type='checkbox' id='studentUsers' name='studentUsers' value='student' class='userCheck'>
+                                <input type='checkbox' id='studentUsers' name='studentUsers' value='student'>
                                 <label for='studentUsers'>Students</label><br>
 
-                                <input type='checkbox' id='facultyUsers' name='facultyUsers' value='faculty' class='userCheck'>
+                                <input type='checkbox' id='facultyUsers' name='facultyUsers' value='faculty'>
                                 <label for='facultyUsers'>Faculty</label><br>
 
-                                <input type='checkbox' id='staffUsers' name='staffUsers' value='staff' class='userCheck'>
+                                <input type='checkbox' id='staffUsers' name='staffUsers' value='staff'>
                                 <label for='staffUsers'>Staff</label><br>
 
                             </div>

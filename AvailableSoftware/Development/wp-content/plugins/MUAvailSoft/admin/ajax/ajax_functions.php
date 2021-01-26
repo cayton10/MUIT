@@ -18,6 +18,10 @@
 
         $software = $package['software'];
         $users = $package['users'];
+        $terms = $package['searchTerms'];
+        $alts = $package['alternatives'];
+        $osArray = $package['os'];
+
 
         
         //Store all data sent from form into variables
@@ -52,8 +56,32 @@
         
 /* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
         
+        //Control flow for !empty, being that user's aren't necessarily required
+        //To enter information for search terms
+        if(!empty($terms))
+        {
+            $addTerm = new SearchTerm();
+            
+            $addTerm->addSearchTerms($terms, $softID);
+        }
+
+/* ------------------ ADD ALTERNATIVE SOFTWARE NAMES TO DB ------------------ */
+
+        if(!empty($alts))
+        {
+            $addAlt = new SoftwareAlternative();
+
+            $addAlt->addAlternatives($alts, $softID);
+        }
+
+/* ---------------------- ADD OPERATING SYSTEM(S) TO DB --------------------- */
+
+        $operSystem = new OperatingSystem();
+
+        $operSystem->addOperatingSystem($osArray, $softID);
 
 
+        //WP Ajax calls require wp_die() at end of function
         wp_die();
 
     }
