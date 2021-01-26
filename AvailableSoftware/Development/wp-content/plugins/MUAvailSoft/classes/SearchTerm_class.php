@@ -21,7 +21,6 @@ class SearchTerm
         //Declare global wp database accessor
         global $wpdb;
 
-        $searchArray = array();
         //Iteratively insert the search terms into the search_terms table
         foreach($termsArray as $term)
         {

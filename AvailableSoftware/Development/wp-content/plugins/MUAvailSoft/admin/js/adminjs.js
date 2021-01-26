@@ -188,4 +188,29 @@ $(document).ready(function(){
             $(this).parent('li').remove();
        });
 
+
+/* -------------------------------------------------------------------------- */
+/*                  PREVENT OTHER SELECTION WITH 'ALL USERS'                  */
+/* -------------------------------------------------------------------------- */
+
+       /**
+        * If a user is adding software and selects the "All Users" checkbox,
+        * we naturallly don't want them to select the other options since it
+        * won't jive with our DB structure and querying
+        */
+       $('#allUsers').on('click', function()
+       {
+            if($(this).prop("checked") == true)
+            {
+                //Disable the other user type checkboxes
+                $('#studentUsers').prop("disabled", true);
+                $('#facultyUsers').prop("disabled", true);
+                $('#staffUsers').prop("disabled", true);
+            }
+            else
+            {
+                $('.userCheck').removeAttr("disabled");
+            }
+       });
+
 });

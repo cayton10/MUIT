@@ -19,6 +19,9 @@
         $software = $package['software'];
         $users = $package['users'];
         $terms = $package['searchTerms'];
+        $alts = $package['alternatives'];
+        $osArray = $package['os'];
+
 
         
         //Store all data sent from form into variables
@@ -58,12 +61,26 @@
         {
             $addTerm = new SearchTerm();
             
-            $array = $addTerm->addSearchTerms($terms, $softID);
-            
-            print_r($array);
+            $addTerm->addSearchTerms($terms, $softID);
         }
 
+/* ------------------ ADD ALTERNATIVE SOFTWARE NAMES TO DB ------------------ */
 
+        if(!empty($alts))
+        {
+            $addAlt = new SoftwareAlternative();
+
+            $addAlt->addAlternatives($alts, $softID);
+        }
+
+/* ---------------------- ADD OPERATING SYSTEM(S) TO DB --------------------- */
+
+        $operSystem = new OperatingSystem();
+
+        $operSystem->addOperatingSystem($osArray, $softID);
+
+
+        //WP Ajax calls require wp_die() at end of function
         wp_die();
 
     }
