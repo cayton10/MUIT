@@ -18,6 +18,7 @@
 
         $software = $package['software'];
         $users = $package['users'];
+        $terms = $package['searchTerms'];
 
         
         //Store all data sent from form into variables
@@ -38,7 +39,7 @@
 
 /* ------------------------- ADD SOFTWARE_USER TO DB ------------------------ */
         
-        //Instaniate NEXT object
+        //Instaniate object of User class
         $user = new User();
 
         foreach($users as $key => $value)
@@ -48,7 +49,19 @@
             
             //Insert the record for software_user table
             $user->addSoftwareUser(1, $softID, $userID);
-        }    
+        }
+        
+/* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
+        //Control flow for !empty, being that user's aren't necessarily required
+        //To enter information for search terms
+        if(!empty($terms))
+        {
+            $addTerm = new SearchTerm();
+            
+            $array = $addTerm->addSearchTerms($terms, $softID);
+            
+            print_r($array);
+        }
 
 
         wp_die();
