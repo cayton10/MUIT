@@ -27,3 +27,10 @@
     border-radius: 50%;
     font-size: 15;
 }
+
+
+/* Select options for editing software styling */
+.softwareEditSelect{
+    display: grid;
+    grid-template-columns: 1fr;
+}

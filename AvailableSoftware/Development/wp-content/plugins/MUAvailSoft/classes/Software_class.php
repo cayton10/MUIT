@@ -31,6 +31,24 @@
             return $results;
         }
 
+        /**
+         * getSoftwareNames();
+         * Takes no parameters. Returns the names of all software packages in the
+         * software table
+         */
+        public function getSoftwareNames()
+        {
+            global $wpdb;
+            $query = "";
+
+            $query = "SELECT soft_id, soft_company, soft_name
+                        FROM software
+                        ORDER BY soft_company";
+            
+            $results = $wpdb->get_results($query);
+            return $results;
+        }
+
 
         /**
          * addSoftware(string, string, string, double, string, string);
