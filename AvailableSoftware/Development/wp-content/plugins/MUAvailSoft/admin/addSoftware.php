@@ -70,19 +70,19 @@
                         <h2><label for='operatingSystem'>Operating System</label></h2>
                             <div class='osSection' id='osCheckBoxes'>
 
-                                <input type='checkbox' id='windows' name='windows' value='1'>
+                                <input type='checkbox' id='windows' name='windows' value='1' class='osCheck'>
                                 <label for='windows'>Windows</label><br>
 
-                                <input type='checkbox' id='mac' name='mac' value='2'>
+                                <input type='checkbox' id='mac' name='mac' value='2' class='osCheck'>
                                 <label for='mac'>MacOS</label><br>
 
-                                <input type='checkbox' id='linux' name='linux' value='3'>
+                                <input type='checkbox' id='linux' name='linux' value='3' class='osCheck'>
                                 <label for='linux'>Linux</label><br>
 
-                                <input type='checkbox' id='ios' name='ios' value='4'>
+                                <input type='checkbox' id='ios' name='ios' value='4' class='osCheck'>
                                 <label for='ios'>iOS</label><br>
 
-                                <input type='checkbox' id='android' name='android' value='5'>
+                                <input type='checkbox' id='android' name='android' value='5' class='osCheck'>
                                 <label for='android'>Android</label><br>
 
                             </div>

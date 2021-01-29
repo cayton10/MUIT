@@ -12,16 +12,9 @@
         
         // check if user is allowed access
         if ( ! current_user_can( 'manage_options' ) ) return;
-        
-        //Instantiate object of software class to query all software packages
+
         $software = new Software();
         $softList = $software->getSoftwareNames();
-
-        foreach($softList as $item)
-        {
-            echo $item->soft_company . " " . $item->soft_name;
-        }
-
         ?>
 
         

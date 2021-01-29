@@ -49,6 +49,31 @@
             return $results;
         }
 
+        /**
+         * checkDuplicate($name, $company);
+         * Takes two string parameters. Checks if software company and name have already
+         * been added to the DB for single row
+         */
+        public function checkDuplicate($manu, $name)
+        {
+            global $wpdb;
+            $wild = '%';
+            $secName = $wild . $wpdb->esc_like($name) . $wild;
+            $secManu = $wild . $wpdb->esc_like($manu) . $wild;
+
+            $query = "";
+
+            $query = $wpdb->prepare("SELECT COUNT(soft_id) AS duplicates 
+                                        FROM software
+                                        WHERE soft_company LIKE %s 
+                                        AND soft_name LIKE %s", array($secManu, $secName));
+
+            $results = $wpdb->get_results($query);
+
+            //Return the number of duplicate entries for entered software
+            return $results[0]->duplicates;
+        }
+
 
         /**
          * addSoftware(string, string, string, double, string, string);

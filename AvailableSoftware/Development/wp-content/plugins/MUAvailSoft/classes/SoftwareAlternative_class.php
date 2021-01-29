@@ -8,7 +8,7 @@ class SoftwareAlternative
 {
     public function __construct()
     {
-
+        
     }
 
     /**
