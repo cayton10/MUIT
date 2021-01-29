@@ -20,3 +20,23 @@ Software packages are being sent to php ajax handler script to process informati
 #### 1.26.2021
 
 All relevant software information except Department can successfully be added to DB. Future meetings needed to determine strict business rules for department and how to proceed.
+
+## ToDo's:
+
+### Smart Searching (Predictive Text)
+
+Need to implement smart searching for fields:
+- Software Category
+- Software Package Alternatives
+- Associated Search Terms
+- Department
+
+Employing predictive `TAB` text will reduce errors on user input. 
+
+### Download location
+
+Change wording for this link location. Make it clear that the information to enter should be the page containing the download link, not the link itself.
+
+### Department Table
+
+A list of departments will be needed to move forward with this feature.
