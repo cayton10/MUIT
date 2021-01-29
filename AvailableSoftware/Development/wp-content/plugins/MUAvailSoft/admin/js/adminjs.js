@@ -3,7 +3,7 @@
 var $ = jQuery;
 
 $(document).ready(function(){
-    //alert("Works");
+    
 
 
 /* -------------------------------------------------------------------------- */
@@ -212,5 +212,41 @@ $(document).ready(function(){
                 $('.userCheck').removeAttr("disabled");
             }
        });
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                            EDIT SOFTWARE JQUERY                            */
+/* -------------------------------------------------------------------------- */
+    $('#editSoftwareForm').hide();
+
+/* -------------------------------------------------------------------------- */
+/*                  ON EDITSOFTWAREFORM CHANGE, LOAD DETAILS                  */
+/* -------------------------------------------------------------------------- */
+    $('#editSelectElement').on('change', function()
+    {
+        alert(this.value);
+
+        //Show the form
+        $('#editSoftwareForm').slideDown(800);
+        //Grab the value of the selected software package
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
