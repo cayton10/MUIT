@@ -34,3 +34,16 @@
     display: grid;
     grid-template-columns: 1fr;
 }
+
+
+/* Styling for package alternatives */
+#alternativeList{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+/* Styling for search terms */
+#searchTermsList{
+    display: inline-flex;
+    flex-wrap: wrap;
+}

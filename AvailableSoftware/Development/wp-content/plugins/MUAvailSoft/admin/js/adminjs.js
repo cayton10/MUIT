@@ -4,7 +4,27 @@ var $ = jQuery;
 
 $(document).ready(function(){
     
+/**
+ * getSoftwareArray();
+ * Takes no parameters. Pulls software information from form and returns
+ * as array
+ */
+function getSoftwareArray()
+{
+    var softwareArray = {};
 
+    /* ------------------------ GET SOFTWARE INFORMATION ------------------------ */
+
+    softwareArray['manu'] = $('#softwareManufacturer').val();
+    softwareArray['name'] = $('#softwareName').val();
+    softwareArray['cat'] = $('#softwareCat').val();
+    softwareArray['price'] = $('#softwarePrice').val();
+    softwareArray['desc'] = $('#softwareDesc').val();
+    softwareArray['download'] = $('#softwareDownload').val();
+
+    return softwareArray;
+
+}
 
 /* -------------------------------------------------------------------------- */
 /*                      SUBMIT ADD SOFTWARE FORM FUNCTION                     */
@@ -16,31 +36,40 @@ $(document).ready(function(){
      */
     $('#addSoftwareForm').on('submit', function(e){
 
-
         e.preventDefault();
+        //Ensure checkbox groups are complete
+        userChecked = $('.userCheck:checked').length;
+
+        if(!userChecked)
+        {
+            alert("You must select a user group.");
+            return;
+        }
+
+        osChecked = $('.osCheck:checked').length;
+
+        if(!osChecked)
+        {
+            alert("You must select a valid operating system");
+            return;
+        }
+
+
+        
 
         //Primary array to send to DB
         var packageArray = {};
 
-        //Declare all necessary arrays to store information
-        var softwareArray = {};
         var alternativesArray = [];
         var searchTermsArray = [];
         var users = [];
         var operatingSystem = [];
         var departments = [];
 
-/* ------------------------ GET SOFTWARE INFORMATION ------------------------ */
 
-        softwareArray['manu'] = $('#softwareManufacturer').val();
-        softwareArray['name'] = $('#softwareName').val();
-        softwareArray['cat'] = $('#softwareCat').val();
-        softwareArray['price'] = $('#softwarePrice').val();
-        softwareArray['desc'] = $('#softwareDesc').val();
-        softwareArray['download'] = $('#softwareDownload').val();
         
         //Load the software information into the main 'package' array at software index
-        packageArray['software'] = softwareArray;
+        packageArray['software'] = getSoftwareArray();
         
 
 /* -------------------- GET ALTERNATIVE SOFTWARE EXAMPLES ------------------- */
@@ -95,7 +124,6 @@ $(document).ready(function(){
 
         packageArray['department'] = departments;
 
-
         //Construct the ajax request and fire 
         $.ajax({
             url: ajaxurl,
@@ -108,9 +136,8 @@ $(document).ready(function(){
             },
             success: function(response)
             {
-                //Add some success handler here
-                alert(response);
-                //Clear all user input
+                if(response['success'] == false)
+                alert(response['message']);
             },
             error: function(xhr, status, error)
             {
@@ -131,6 +158,12 @@ $(document).ready(function(){
 
      $('#addAlternative').on('click', function(e)
      {
+
+         if($('#softwareAlternatives').val() == '')
+         {
+             return;
+         }
+
          e.preventDefault();
 
          //Get information from the input field
@@ -163,8 +196,13 @@ $(document).ready(function(){
        * Function to add search terms associated with entered software package
        * as visibile buttons which can be removed
        */
-
+       
        $('#addSearchTerm').on('click', function(e){
+
+            if($('#searchTerm').val() == '')
+            {
+                return;
+            }
 
             e.preventDefault();
 
@@ -204,8 +242,13 @@ $(document).ready(function(){
             {
                 //Disable the other user type checkboxes
                 $('#studentUsers').prop("disabled", true);
+                $('#studentUsers').prop("checked", false);
+
                 $('#facultyUsers').prop("disabled", true);
+                $('#facultyUsers').prop("checked", false);
+
                 $('#staffUsers').prop("disabled", true);
+                $('#staffUsers').prop("checked", false);
             }
             else
             {

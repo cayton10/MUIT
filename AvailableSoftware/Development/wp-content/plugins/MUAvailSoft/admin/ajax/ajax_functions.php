@@ -13,8 +13,10 @@
     function add_software()
     {
 
+        //Response array for user update
+        $response = [];
+
         $package = $_POST['data'];
-        //print_r($package);
 
         $software = $package['software'];
         $users = $package['users'];
@@ -32,11 +34,22 @@
         $desc = htmlspecialchars(trim($software['desc']));
         $download = htmlspecialchars(trim($software['download']));
 
-/* --------------------------- ADD SOFTWARE TO DB --------------------------- */
+/* ---------------------- CHECK FOR SOFTWARE DUPLICATE ---------------------- */
         
         //Instantiate software object
         $soft = new Software();
 
+        $result = $soft->checkDuplicate($manu, $name);
+
+        if($result > 0)
+        {
+            $response['success'] = false;
+            $response['message'] = "A package with that name already exists. Do you want to edit?";
+            echo json_encode($response);
+            wp_die();
+        }
+
+/* --------------------------- ADD SOFTWARE TO DB --------------------------- */
         //Adds all relevant software information and stores last inserted ID
         $softID = $soft->addSoftware($manu, $name, $cat, $price, $desc, $download);
 
@@ -71,6 +84,7 @@
         {
             $addAlt = new SoftwareAlternative();
 
+
             $addAlt->addAlternatives($alts, $softID);
         }
 
@@ -87,5 +101,8 @@
     }
 
     add_action('wp_ajax_add_software', 'add_software');
+
+
+    
 
 ?>
