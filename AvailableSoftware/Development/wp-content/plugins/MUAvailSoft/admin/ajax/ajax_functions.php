@@ -23,6 +23,7 @@
         $terms = $package['searchTerms'];
         $alts = $package['alternatives'];
         $osArray = $package['os'];
+        $deptArray = $package['department'];
 
 
         
@@ -94,6 +95,12 @@
 
         $operSystem->addOperatingSystem($osArray, $softID);
 
+/* ---------------- ADD DEPARTMENT AVAILABILITY INFO (BRIDGE) --------------- */
+
+        $department = new Department();
+
+        $department->addDepartment($deptArray, $softID);
+
 
         //WP Ajax calls require wp_die() at end of function
         wp_die();
@@ -102,6 +109,38 @@
 
     add_action('wp_ajax_add_software', 'add_software');
 
+
+/* -------------------------------------------------------------------------- */
+/*                  SMART SEARCH FUNCTIONALITY ON DATA ENTRY                  */
+/* -------------------------------------------------------------------------- */
+
+    /**
+     * Function acts as ajax handler to query DB for data input fields
+     * Instantiates object of SmartSearch class to query appropriate table
+     * based on passed args
+     */
+
+    function smart_search()
+    {
+        //Keywords to return to user, if there are any
+        $response = [];
+
+        $package = $_REQUEST['data'];
+
+        $fieldType = $package['dataField'];
+        $keyWord = htmlspecialchars(trim($package['keyWord']));
+
+
+        $search = new SmartSearch();
+
+        $result = $search->SearchString($fieldType, $keyWord);
+
+        echo json_encode($result);
+
+        wp_die();
+    }
+
+    add_action('wp_ajax_smart_search', 'smart_search');
 
     
 

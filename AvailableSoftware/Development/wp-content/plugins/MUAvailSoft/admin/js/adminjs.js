@@ -3,28 +3,30 @@
 var $ = jQuery;
 
 $(document).ready(function(){
+
+    $('.smartResults').hide();
     
-/**
- * getSoftwareArray();
- * Takes no parameters. Pulls software information from form and returns
- * as array
- */
-function getSoftwareArray()
-{
-    var softwareArray = {};
+    /**
+     * getSoftwareArray();
+     * Takes no parameters. Pulls software information from form and returns
+     * as array
+     */
+    function getSoftwareArray()
+    {
+        var softwareArray = {};
 
-    /* ------------------------ GET SOFTWARE INFORMATION ------------------------ */
+        /* ------------------------ GET SOFTWARE INFORMATION ------------------------ */
 
-    softwareArray['manu'] = $('#softwareManufacturer').val();
-    softwareArray['name'] = $('#softwareName').val();
-    softwareArray['cat'] = $('#softwareCat').val();
-    softwareArray['price'] = $('#softwarePrice').val();
-    softwareArray['desc'] = $('#softwareDesc').val();
-    softwareArray['download'] = $('#softwareDownload').val();
+        softwareArray['manu'] = $('#softwareManufacturer').val();
+        softwareArray['name'] = $('#softwareName').val();
+        softwareArray['cat'] = $('#softwareCat').val();
+        softwareArray['price'] = $('#softwarePrice').val();
+        softwareArray['desc'] = $('#softwareDesc').val();
+        softwareArray['download'] = $('#softwareDownload').val();
 
-    return softwareArray;
+        return softwareArray;
 
-}
+    }
 
 /* -------------------------------------------------------------------------- */
 /*                      SUBMIT ADD SOFTWARE FORM FUNCTION                     */
@@ -275,6 +277,77 @@ function getSoftwareArray()
         //Grab the value of the selected software package
 
     });
+
+
+/* -------------------------------------------------------------------------- */
+/*                     SMART SEARCH FOR DATA ENTRY FIELDS                     */
+/* -------------------------------------------------------------------------- */
+    $('.smartField').keyup(function()
+    {
+        var element = $(this);
+        //if no content in data field, hide suggestion
+        if($(this).val() == "")
+            $('.smartResults').fadeOut('150');
+        else
+        {
+            if($(this).val().length < 2)
+                return;
+
+            else
+            {
+                var packageArray = {};
+                //Set up our arguments to pass
+                packageArray['dataField'] = $(this).data('fieldtype');
+                packageArray['keyWord'] = $(this).val();
+
+                console.log(packageArray['dataField']);
+                console.log(packageArray['keyWord']);
+
+                $.ajax(
+                    {
+                        url: ajaxurl,
+                        method: "GET",
+                        dataType: "JSON",
+                        data: 
+                        {
+                            action: "smart_search",
+                            data: packageArray
+                        },
+                        success: function(response)
+                        {
+                            var output = "";
+                            var prevKeyword = "";
+
+                            console.log(response);
+
+                            $.each(response, function(i, result) 
+                            {
+                                if(result.keyword != prevKeyword)
+                                {
+                                    output += "<span><a href='#' onclick='return false;' class='smartKeyword'>" + result.keyword + "</a></span><br />";
+                                }
+
+                                prevKeyword = result.keyword;
+                            });
+
+                            if(output.length != 0)
+                            {
+                                element.next('.smartResults').html(output);
+                                element.next('.smartResults').fadeIn('200');
+
+                                /*$('.smartResults').html(output);
+                                $('.smartResults').fadeIn('200');*/
+                            }
+                        },
+                        error: function(xhr, status, error)
+                        {
+                            console.log(xhr.responseText);
+                        }
+                    }
+                )
+            }
+        }
+    })
 
 
 

@@ -47,3 +47,13 @@
     display: inline-flex;
     flex-wrap: wrap;
 }
+
+/* Smart search (autocomplete) div styling*/
+.smartResults{
+    background-color: white;
+    border: 1px solid #ccc !important;
+    position: absolute !important;
+    width: 20vw;
+    display: block;
+    z-index: 100;
+}
