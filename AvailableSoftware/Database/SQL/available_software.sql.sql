@@ -36,10 +36,6 @@ CREATE TABLE `department` (
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`dept_id`, `dept_name`) VALUES
-(1, 'ALL'),
-(2, 'College of Science'),
-(3, 'Information Technology');
 
 -- --------------------------------------------------------
 
@@ -48,17 +44,12 @@ INSERT INTO `department` (`dept_id`, `dept_name`) VALUES
 --
 
 CREATE TABLE `dept_software` (
-  `despt_soft_id` int NOT NULL,
+  `dept_soft_id` int NOT NULL,
   `dept_id` int NOT NULL,
   `soft_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `dept_software`
---
 
-INSERT INTO `dept_software` (`despt_soft_id`, `dept_id`, `soft_id`) VALUES
-(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -76,11 +67,11 @@ CREATE TABLE `operating_system` (
 --
 
 INSERT INTO `operating_system` (`os_id`, `os_name`) VALUES
-(2, 'Windows 10'),
-(3, 'MacOSX'),
-(4, 'Linux'),
-(5, 'iOS'),
-(8, 'Android');
+(1, 'Windows 10'),
+(2, 'MacOSX'),
+(3, 'Linux'),
+(4, 'iOS'),
+(5, 'Android');
 
 -- --------------------------------------------------------
 
@@ -94,13 +85,6 @@ CREATE TABLE `search_terms` (
   `soft_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `search_terms`
---
-
-INSERT INTO `search_terms` (`search_id`, `search_term`, `soft_id`) VALUES
-(1, 'antivirus', 1),
-(2, 'anti virus', 1);
 
 -- --------------------------------------------------------
 
@@ -118,14 +102,6 @@ CREATE TABLE `software` (
   `soft_download` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `software`
---
-
-INSERT INTO `software` (`soft_id`, `soft_name`, `soft_company`, `soft_type`, `soft_price`, `soft_description`, `soft_download`) VALUES
-(1, 'Defender Antivirus', 'Microsoft', 'Antivirus Application', '0.00', 'Formerly known as Windows Defender, Microsoft Defender Antivirus still delivers the comprehensive, ongoing, and real-time protection you expect against software threats like viruses, malware, and spyware across email, apps, the cloud, and the web.', 'On-Campus');
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `software_platform`
@@ -137,12 +113,6 @@ CREATE TABLE `software_platform` (
   `soft_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `software_platform`
---
-
-INSERT INTO `software_platform` (`soft_plat_id`, `os_id`, `soft_id`) VALUES
-(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -157,14 +127,6 @@ CREATE TABLE `software_user` (
   `user_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `software_user`
---
-
-INSERT INTO `software_user` (`su_id`, `su_eligible`, `soft_id`, `user_id`) VALUES
-(1, 1, 1, 2),
-(2, 1, 1, 3),
-(4, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -177,13 +139,6 @@ CREATE TABLE `soft_alternative` (
   `alt_name` varchar(45) NOT NULL,
   `soft_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `soft_alternative`
---
-
-INSERT INTO `soft_alternative` (`alt_id`, `alt_name`, `soft_id`) VALUES
-(1, 'WebRoot', 1);
 
 -- --------------------------------------------------------
 
