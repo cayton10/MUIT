@@ -25,13 +25,11 @@ All relevant software information except Department can successfully be added to
 
 ### Smart Searching (Predictive Text)
 
-Need to implement smart searching for fields:
-- Software Category
-- Software Package Alternatives
-- Associated Search Terms
-- Department
-
-Employing predictive `TAB` text will reduce errors on user input. 
+As of <strong>2.19.21</strong> this functionality is working at 90% cap. 
+I still need to:
+- Style the dropdown divs
+- Style the anchor tags containing the DB keyword result
+- Fix the jQuery logic for adding the keyword to the list as a "button"
 
 ### Download location
 
