@@ -334,9 +334,6 @@ $(document).ready(function(){
                             {
                                 element.next('.smartResults').html(output);
                                 element.next('.smartResults').fadeIn('200');
-
-                                /*$('.smartResults').html(output);
-                                $('.smartResults').fadeIn('200');*/
                             }
                         },
                         error: function(xhr, status, error)
