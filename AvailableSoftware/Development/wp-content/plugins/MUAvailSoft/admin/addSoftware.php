@@ -58,7 +58,7 @@
 
                 <!-- Alternatives to Software Entered -->
                         <h2><label for='softwareAlternatives'>Software Package Alternatives<label></h2>
-                            <div class='alternativeFields' id='alternativeFields'>
+                            <div class='smartSearchDiv' id='alternativeFields'>
                                 <input type='text' id='softwareAlternatives' placeholder="Ex: Google Sheets" class='softwareInput smartField' autocomplete='off' data-fieldType="alts">
                                 <div class='smartResults'></div>
                                 <button type='button' class='button-primary' id='addAlternative'>Add</button>
@@ -90,7 +90,7 @@
 
                 <!-- Associated Search Terms -->
                         <h2><label for='searchTerms'>Associated Search Terms</label></h2>
-                            <div class='searchTermsSection'>
+                            <div class='smartSearchDiv' id='searchTermsSection'>
                                 <input type='text' id='searchTerm' placeholder="Ex: Spreadsheets, Word Processor, etc." class='softwareInput smartField' data-fieldType="terms" autocomplete="off">
                                 <div class='smartResults'></div>
                                 <button type='button' class='button-primary' id='addSearchTerm'>Add</button>

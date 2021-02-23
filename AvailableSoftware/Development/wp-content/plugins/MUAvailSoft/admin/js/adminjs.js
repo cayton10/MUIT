@@ -230,6 +230,36 @@ $(document).ready(function(){
 
 
 /* -------------------------------------------------------------------------- */
+/*            ADD SUGGESTED KEYWORD TO INPUT FIELD ON CLICK / ENTER           */
+/* -------------------------------------------------------------------------- */
+
+       /**
+        * Function adds the suggested "smart searched" keyword retrieved
+        * from DB either on click or TAB -> Enter to the input field. This
+        * element has been dynamically created, so remember: $(document).on
+        */
+
+        $(document).on('click', '.smartKeyword', function(e){
+            //Keep the window from reloading on anchor click
+            e.preventDefault;
+
+            var keyword = $(this).html();
+
+            //Update the input field with selected term
+            $(this).closest('.smartSearchDiv').find('input.smartField').val(keyword);
+
+            //Hide the div with the suggestions since a KW was selected
+            $('div.smartResults').hide();
+
+            return false;
+
+            
+        });
+
+        
+
+
+/* -------------------------------------------------------------------------- */
 /*                  PREVENT OTHER SELECTION WITH 'ALL USERS'                  */
 /* -------------------------------------------------------------------------- */
 
@@ -300,9 +330,6 @@ $(document).ready(function(){
                 packageArray['dataField'] = $(this).data('fieldtype');
                 packageArray['keyWord'] = $(this).val();
 
-                console.log(packageArray['dataField']);
-                console.log(packageArray['keyWord']);
-
                 $.ajax(
                     {
                         url: ajaxurl,
@@ -318,13 +345,11 @@ $(document).ready(function(){
                             var output = "";
                             var prevKeyword = "";
 
-                            console.log(response);
-
                             $.each(response, function(i, result) 
                             {
                                 if(result.keyword != prevKeyword)
                                 {
-                                    output += "<span><a href='#' onclick='return false;' class='smartKeyword'>" + result.keyword + "</a></span><br />";
+                                    output += "<span class='resultText'><a href='#' class='smartKeyword'>" + result.keyword + "</a></span>";
                                 }
 
                                 prevKeyword = result.keyword;
