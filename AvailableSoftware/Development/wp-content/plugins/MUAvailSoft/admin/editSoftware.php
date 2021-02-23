@@ -33,6 +33,7 @@
                         $output .= "<option value='" . $item->soft_id . "'>" . $item->soft_company . " - " . $item->soft_name . "</option>";
                     }
 
+                    echo $output;
                 ?>
 
                 </select>
