@@ -300,11 +300,61 @@ $(document).ready(function(){
 /* -------------------------------------------------------------------------- */
     $('#editSelectElement').on('change', function()
     {
-        alert(this.value);
-
+        var id = this.value;
         //Show the form
         $('#editSoftwareForm').slideDown(800);
         //Grab the value of the selected software package
+        $.ajax(
+            {
+                url: ajaxurl,
+                method: "GET",
+                dataType: "JSON",
+                data:
+                {
+                    action: "edit_software_package",
+                    data: id
+                },
+                success: function(response)
+                {
+                    var soft = response['soft_package'][0];
+                    var user = response['user_info'];
+                    var os = response['operating_sys'];
+                    var alts = response['soft_alts'];
+
+
+                    //Populate returned base software info
+                    $('#softwareManufacturer').val(soft['soft_company']);
+                    $('#softwareName').val(soft['soft_name']);
+                    $('#softwareCat').val(soft['soft_type']);
+                    $('#softwarePrice').val(soft['soft_price']);
+                    $('#softwareDesc').val(soft['soft_description']);
+                    $('#softwareDownload').val(soft['soft_download']);
+
+                    //Populate returned user info for checkbox form group
+                    $.each(user, function(i, result)
+                    {
+                        $(":checkbox[value='" + result.user_type + "']").prop("checked", true);
+                    });
+
+                    //Populate returned operating system info checkbox form group
+                    $.each(os, function(i, result)
+                    {
+                        $(":checkbox[value='" + result.os_id + "']").prop("checked", true);
+                    });
+
+                    //Populate returned alternative name buttons
+
+
+
+
+
+                    console.log(response);
+                },
+                error: function(xhr, status, error)
+                {
+                    console.log(xhr.responseText);
+                }
+        });
 
     });
 
@@ -369,7 +419,7 @@ $(document).ready(function(){
                 )
             }
         }
-    })
+    });
 
 
 
