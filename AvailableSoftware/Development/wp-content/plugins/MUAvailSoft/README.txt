@@ -31,3 +31,11 @@ In order to reduce duplication of data, multiple queries are fired in the 'getAl
 Software class function. Appropriate package results are loaded into an associative array with
 designated array keys so it's easier to output the information needed and cuts down on the amount
 of text recieved by a single query.
+
+#### 2.25.2021
+
+Spent most of the day removing or fixing bugs that I introduced to the system by adding functionality. Fixed things like: smartSearch Divs not hiding after adding options, duplication of buttons for search terms and package alternatives... various bugs.
+
+##### Database Interaction for Editing Software
+
+I decided it would be easiest to simply remove the entire software package and all associated data rather than update since each row of software has so many relationships with other tables. I figured it would pare down the complexity and significantly reduce development time. After the previous information is removed, all of the info from the editing form is inserted into the DB, albiet under a new unique PK.

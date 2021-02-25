@@ -28,6 +28,14 @@
     font-size: 15;
 }
 
+.cancelTerm{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #dc091d;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 15;
+}
+
 
 /* Select options for editing software styling */
 .softwareEditSelect{
@@ -42,10 +50,19 @@
     flex-wrap: wrap;
 }
 
+/*Style alternative software buttons */
+.altButton{
+    margin-right: 0.5vw;
+}
+
 /* Styling for search terms */
-#searchTermsList{
+#searchTermList{
     display: inline-flex;
     flex-wrap: wrap;
+}
+
+.termButton{
+    margin-right: 0.5vw;
 }
 
 
@@ -71,4 +88,18 @@
     display: block;
     padding-bottom: 0.5vw;
     color:black;
+}
+
+/*Edit software form submit button styling*/
+
+#editSoftSubmitButtonDiv{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submitEditSoftware{
+    
+    
 }

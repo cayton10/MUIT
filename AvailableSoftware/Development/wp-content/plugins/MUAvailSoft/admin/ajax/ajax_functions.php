@@ -96,9 +96,9 @@
 
 /* ---------------- ADD DEPARTMENT AVAILABILITY INFO (BRIDGE) --------------- */
 
-        $department = new Department();
+        //$department = new Department();
 
-        $department->addDepartment($deptArray, $softID);
+        //$department->addDepartment($deptArray, $softID);
 
 
         //WP Ajax calls require wp_die() at end of function

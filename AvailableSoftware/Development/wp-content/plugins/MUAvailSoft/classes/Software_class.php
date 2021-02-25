@@ -159,6 +159,23 @@
 
             return $results;
         }
+
+        /**
+         * removeSoftware(int);
+         * Takes one parameter (soft_id) and deletes all records associated with
+         * specified software package. Database design cascades deletion of records,
+         * so a simple delete record for software table will propagate to all related
+         * tables.
+         */
+        public function removeSoftware($soft_id)
+        {
+            //Declare global wp database
+            global $wpdb;
+
+            $results = [];
+
+            $query = "";
+        }
     }
 
 ?>
