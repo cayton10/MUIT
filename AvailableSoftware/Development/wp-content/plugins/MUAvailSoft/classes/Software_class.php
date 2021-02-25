@@ -105,6 +105,77 @@
 
             return $lastID;
         }
+
+        /**
+         * getAllSoftDetails(int);
+         * Takes one integer parameter (soft_id) to return all associated information
+         * related to that specific software package. Requires multiple queries
+         */
+        public function getAllSoftDetails($soft_id)
+        {
+            //Declare global wp database
+            global $wpdb;
+
+            $results = [];
+
+            //Construct query #1 to return base software information
+            $query = "";
+
+            $query = "SELECT soft_name, soft_company, soft_type, soft_price, soft_description, soft_download
+                        FROM software
+                        WHERE soft_id = $soft_id";
+
+            $results['soft_package'] = $wpdb->get_results($query);
+
+            //Construct query #2 for user information
+            $query = "SELECT user_type
+                        FROM user t1
+                        LEFT JOIN software_user t2 ON t1.user_id = t2.user_id
+                        WHERE t2.soft_id = $soft_id";
+            $results['user_info'] = $wpdb->get_results($query);
+
+            //Construct query #3 for software alternatives
+            $query = "SELECT alt_name
+                        FROM soft_alternative
+                        WHERE soft_id = $soft_id";
+            $results['soft_alts'] = $wpdb->get_results($query);
+
+            //Construct query #4 for operating system info
+            $query = "SELECT t1.os_id
+                        FROM operating_system t1
+                        LEFT JOIN software_platform t2 ON t1.os_id = t2.os_id
+                        WHERE t2.soft_id = $soft_id";
+            $results['operating_sys'] = $wpdb->get_results($query);
+
+            //Construct query #5 for search terms info
+            $query = "SELECT search_term
+                        FROM search_terms
+                        WHERE soft_id = $soft_id";
+            $results['search_terms'] = $wpdb->get_results($query);
+
+            /**
+             * Stubbed for departments (when we get info to move forward)
+             */
+
+            return $results;
+        }
+
+        /**
+         * removeSoftware(int);
+         * Takes one parameter (soft_id) and deletes all records associated with
+         * specified software package. Database design cascades deletion of records,
+         * so a simple delete record for software table will propagate to all related
+         * tables.
+         */
+        public function removeSoftware($soft_id)
+        {
+            //Declare global wp database
+            global $wpdb;
+
+            $results = [];
+
+            $query = "";
+        }
     }
 
 ?>

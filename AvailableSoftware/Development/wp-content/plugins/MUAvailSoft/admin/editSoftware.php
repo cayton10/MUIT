@@ -30,7 +30,7 @@
 
                     foreach($softList as $item)
                     {
-                        $output .= "<option value='" . $item->soft_id . "'>" . $item->soft_company . " - " . $item->soft_name . "</option>";
+                        $output .= "<option class='editPackage' value='" . $item->soft_id . "'>" . $item->soft_company . " - " . $item->soft_name . "</option>";
                     }
 
                     echo $output;
@@ -38,8 +38,8 @@
 
                 </select>
             </div>
-            <div id='editSoftwareForm'>
-                <form action="" method="post" id='addSoftwareForm'>
+            <div id='editSoftwareDiv'>
+                <form action="" method="post" id='editSoftwareForm'>
                     <div class='addSoftwareGrid'>
                     <!-- Software input section -->
                         <div class='softwareGridColumn'>
@@ -55,7 +55,6 @@
                                 <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.' spellcheck="true" required></textarea>
                             <h2><label for='softwareDownload'>Software Download Location</label></h2>
                                 <input id='softwareDownload' class='softwareInput' placeholder='https://portal.azure.com/?Microsoft_Azure_Education_correlationId=22e80e44-4b74-411b-9593-69e7ed40fc2f' type='url'></input>
-                                <input type='submit' class='button-primary' id='submitAddSoftware'></input>
                         </div>
 
                     <!-- User information section -->
@@ -91,19 +90,19 @@
                             <h2><label for='operatingSystem'>Operating System</label></h2>
                                 <div class='osSection' id='osCheckBoxes'>
 
-                                    <input type='checkbox' id='windows' name='windows' value='1'>
+                                    <input type='checkbox' id='windows' name='windows' value='1' class='osCheck'>
                                     <label for='windows'>Windows</label><br>
 
-                                    <input type='checkbox' id='mac' name='mac' value='2'>
+                                    <input type='checkbox' id='mac' name='mac' value='2' class='osCheck'>
                                     <label for='mac'>MacOS</label><br>
 
-                                    <input type='checkbox' id='linux' name='linux' value='3'>
+                                    <input type='checkbox' id='linux' name='linux' value='3' class='osCheck'>
                                     <label for='linux'>Linux</label><br>
 
-                                    <input type='checkbox' id='ios' name='ios' value='4'>
+                                    <input type='checkbox' id='ios' name='ios' value='4' class='osCheck'>
                                     <label for='ios'>iOS</label><br>
 
-                                    <input type='checkbox' id='android' name='android' value='5'>
+                                    <input type='checkbox' id='android' name='android' value='5' class='osCheck'>
                                     <label for='android'>Android</label><br>
 
                                 </div>
@@ -123,7 +122,13 @@
                                 <div class='departmentField' id='departmentField'>
                                     <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput'>
                                 </div>
+
+                                <!-- Submit edit form button -->
+                                <div id='editSoftSubmitButtonDiv'>
+                                    <input type='submit' class='button-primary' id='submitEditSoftware' value='Submit Edits'></input>
+                                </div>
                         </div>
+                        
                     </div>
                     
                 </form>

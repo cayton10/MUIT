@@ -97,9 +97,9 @@
 
 /* ---------------- ADD DEPARTMENT AVAILABILITY INFO (BRIDGE) --------------- */
 
-        $department = new Department();
+        //$department = new Department();
 
-        $department->addDepartment($deptArray, $softID);
+        //$department->addDepartment($deptArray, $softID);
 
 
         //WP Ajax calls require wp_die() at end of function
@@ -122,8 +122,6 @@
 
     function smart_search()
     {
-        //Keywords to return to user, if there are any
-        $response = [];
 
         $package = $_REQUEST['data'];
 
@@ -142,6 +140,32 @@
 
     add_action('wp_ajax_smart_search', 'smart_search');
 
-    
+
+/* -------------------------------------------------------------------------- */
+/*                       EDIT SELECTED SOFTWARE PACKAGE                       */
+/* -------------------------------------------------------------------------- */
+
+    /**
+     * Function acts as ajax handler to query DB for selected software
+     * package the user wants to edit. Takes the software ID and brings
+     * back all associated data for altering.
+     */
+
+     function edit_software_package()
+     {
+        $package = $_REQUEST['data'];
+
+        $softID = $package['id'];
+
+        $software = new Software();
+
+        $results = $software->getAllSoftDetails($softID);
+
+        echo json_encode($results);
+
+        wp_die();
+     }
+
+     add_action('wp_ajax_edit_software_package', 'edit_software_package');
 
 ?>

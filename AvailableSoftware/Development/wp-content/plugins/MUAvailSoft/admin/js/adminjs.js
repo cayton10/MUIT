@@ -5,6 +5,12 @@ var $ = jQuery;
 $(document).ready(function(){
 
     $('.smartResults').hide();
+
+    //Make sure they stay hidden if input fields are empty
+    if($('.smartField').val() == "")
+    {
+        $(this).closest('.smartResults').hide();
+    }
     
     /**
      * getSoftwareArray();
@@ -28,6 +34,36 @@ $(document).ready(function(){
 
     }
 
+    
+/* -------------------------------------------------------------------------- */
+/*                           CHECKBOX ERROR HANDLING                          */
+/* -------------------------------------------------------------------------- */
+/**
+ * Function checks if user type and operating system checkboxes have been selected
+ * and returns appropriate message.
+ */
+
+    function checkUserBoxes()
+    {
+       //Ensure checkbox groups are complete
+       var userChecked = $('.userCheck:checked').length;
+
+       if(!userChecked)
+           alert("You must select a user group.");
+
+       return userChecked;
+    }
+
+    function checkOsBoxes()
+    {
+        var osChecked = $('.osCheck:checked').length;
+
+        if(!osChecked)
+            alert("You must select a valid operating system");
+        
+        return osChecked;
+    }
+
 /* -------------------------------------------------------------------------- */
 /*                      SUBMIT ADD SOFTWARE FORM FUNCTION                     */
 /* -------------------------------------------------------------------------- */
@@ -39,29 +75,20 @@ $(document).ready(function(){
     $('#addSoftwareForm').on('submit', function(e){
 
         e.preventDefault();
-        //Ensure checkbox groups are complete
-        userChecked = $('.userCheck:checked').length;
-
-        if(!userChecked)
-        {
-            alert("You must select a user group.");
-            return;
-        }
-
-        osChecked = $('.osCheck:checked').length;
-
-        if(!osChecked)
-        {
-            alert("You must select a valid operating system");
-            return;
-        }
-
-
         
+        //Call our checkbox error handlers
+        var userChecks = checkUserBoxes();
+        if(!userChecks)
+            return;
+        
+        var osChecks = checkOsBoxes();
+        if(!osChecks)
+            return;
 
+
+    
         //Primary array to send to DB
         var packageArray = {};
-
         var alternativesArray = [];
         var searchTermsArray = [];
         var users = [];
@@ -177,6 +204,9 @@ $(document).ready(function(){
          //Clear the input field for next entry
          $('#softwareAlternatives').val('');
 
+         //Hide the smartSearch div if it's shown
+         $('.smartResults').hide();
+
      });
 
      /**
@@ -217,6 +247,9 @@ $(document).ready(function(){
 
             //Clear input field for next entry
             $('#searchTerm').val('');
+
+            //Hide the smartSearch div if it's shown
+            $('.smartResults').hide();
        });
 
        /**
@@ -293,18 +326,130 @@ $(document).ready(function(){
 /* -------------------------------------------------------------------------- */
 /*                            EDIT SOFTWARE JQUERY                            */
 /* -------------------------------------------------------------------------- */
-    $('#editSoftwareForm').hide();
+    $('#editSoftwareDiv').hide();
+
+    /**
+     * On submission of software edits
+     */
+
+    $('#editSoftwareForm').on('submit', function(e)
+    {
+        e.preventDefault();
+
+        //Grab software id of selected software package
+        var id = document.getElementById("editSelectElement").value;
+
+        //Ensure checkbox groups are complete
+        userChecked = $('.userCheck:checked').length;
+
+        alert(userChecked);
+
+        if(!userChecked)
+        {
+            alert("You must select a user group.");
+            return;
+        }
+
+        osChecked = $('.osCheck:checked').length;
+
+        alert(osChecked);
+
+        if(!osChecked)
+        {
+            alert("You must select a valid operating system");
+            return;
+        }
+                
+    });
 
 /* -------------------------------------------------------------------------- */
 /*                  ON EDITSOFTWAREFORM CHANGE, LOAD DETAILS                  */
 /* -------------------------------------------------------------------------- */
     $('#editSelectElement').on('change', function()
     {
-        alert(this.value);
+        //If alternative buttons already on page, remove them
+        if($('.altButton').length)
+            $('.altButton').remove();
 
+        //Same with search terms
+        if($('.termButton').length)
+            $('.termButton').remove();
+        
+        //Same with user checkboxes
+        if($('.userCheck').length)
+            $('.userCheck').prop("checked", false);
+        
+        //Same with OS checkboxes
+        if($('.osCheck').length)
+            $('.osCheck').prop("checked", false);
+
+
+        var id = this.value;
+
+        
+        
         //Show the form
-        $('#editSoftwareForm').slideDown(800);
+        $('#editSoftwareDiv').slideDown(800);
         //Grab the value of the selected software package
+        $.ajax(
+            {
+                url: ajaxurl,
+                method: "GET",
+                dataType: "JSON",
+                data:
+                {
+                    action: "edit_software_package",
+                    data: id
+                },
+                success: function(response)
+                {
+                    var soft = response['soft_package'][0];
+                    var user = response['user_info'];
+                    var os = response['operating_sys'];
+                    var alts = response['soft_alts'];
+                    var terms = response['search_terms'];
+
+
+                    //Populate returned base software info
+                    $('#softwareManufacturer').val(soft['soft_company']);
+                    $('#softwareName').val(soft['soft_name']);
+                    $('#softwareCat').val(soft['soft_type']);
+                    $('#softwarePrice').val(soft['soft_price']);
+                    $('#softwareDesc').val(soft['soft_description']);
+                    $('#softwareDownload').val(soft['soft_download']);
+
+                    //Populate returned user info for checkbox form group
+                    $.each(user, function(i, result)
+                    {
+                        $(".userCheck:checkbox[value='" + result.user_type + "']").prop("checked", true);
+
+                    });
+
+                    //Populate returned operating system info checkbox form group
+                    $.each(os, function(i, result)
+                    {
+                        $(".osCheck:checkbox[value='" + result.os_id + "']").prop("checked", true);
+                    });
+
+                    //Populate returned alternative name buttons
+                    $.each(alts, function(i, result)
+                    {
+                        $('#alternativeList').append("<li class='altButton' data-name='" + result.alt_name + "'><button type='button' class='button-secondary removeAlt'>" + result.alt_name + "  <span class='cancelAlt'>&#x2715<span></button></li>");
+                    });
+
+                    //Populate returned search term buttons
+                    $.each(terms, function(i, result)
+                    {
+                        $('#searchTermList').append("<li class='termButton' data-term='" + result.search_term + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.search_term + "   <span class='cancelTerm'>&#x2715<span></button></li>");
+                    });
+
+                    console.log(response);
+                },
+                error: function(xhr, status, error)
+                {
+                    console.log(xhr.responseText);
+                }
+        });
 
     });
 
@@ -369,22 +514,6 @@ $(document).ready(function(){
                 )
             }
         }
-    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    });
 
 });
