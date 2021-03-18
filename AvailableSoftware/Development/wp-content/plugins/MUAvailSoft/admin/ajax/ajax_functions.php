@@ -105,7 +105,7 @@
         $response['success'] = true;
         $response['message'] = "Software package added";
         echo json_encode($response);
-        
+
         wp_die();
 
     }
@@ -145,7 +145,7 @@
 
 
 /* -------------------------------------------------------------------------- */
-/*                       EDIT SELECTED SOFTWARE PACKAGE                       */
+/*                       FETCH SELECTED SOFTWARE PACKAGE                       */
 /* -------------------------------------------------------------------------- */
 
     /**
@@ -154,21 +154,69 @@
      * back all associated data for altering.
      */
 
-     function edit_software_package()
+     function fetch_software_package()
      {
         $package = $_REQUEST['data'];
 
-        $softID = $package['id'];
-
         $software = new Software();
 
-        $results = $software->getAllSoftDetails($softID);
+        $results = $software->getAllSoftDetails($package);
 
         echo json_encode($results);
 
         wp_die();
      }
 
-     add_action('wp_ajax_edit_software_package', 'edit_software_package');
+     add_action('wp_ajax_fetch_software_package', 'fetch_software_package');
+
+
+/* -------------------------------------------------------------------------- */
+/*                             SAVE SOFTWARE EDITS                            */
+/* -------------------------------------------------------------------------- */
+
+     /**
+      * Function acts as ajax handler to apply changes to software package
+      * from editing and update all related fields in database.
+      */
+
+      function save_software_edits()
+      {
+          $package = $_POST['data'];
+
+          //Taking the easy route and just deleting the package vs checking
+          //comparing edits to what's in DB tables. I came up with some solutions
+          //to this problem, but the implementation will probably take a good 8 hours.
+          //Deleting the software id and inserting the new info will take less time
+
+          $softID = $package['id'];
+          $software = $package['software'];
+          $users = $package['users'];
+          $terms = $package['searchTerms'];
+          $alts = $package['alternatives'];
+          $osArray = $package['os'];
+          $deptArray = $package['department'];
+
+
+        
+          //Store all data sent from form into variables
+          $manu = htmlspecialchars(trim($software['manu']));
+          $name = htmlspecialchars(trim($software['name']));
+          $cat = htmlspecialchars(trim($software['cat']));
+          $price = htmlspecialchars(trim($software['price']));
+          $desc = htmlspecialchars(trim($software['desc']));
+          $download = htmlspecialchars(trim($software['download']));
+
+          $sftware = new Software();
+
+          //Remove the software so we can insert updated data.
+          $result = $sftware->removeSoftware($softID);
+
+          echo json_encode($result);
+          wp_die();
+      }
+
+      add_action('wp_ajax_save_software_edits', 'save_software_edits');
+
+
 
 ?>

@@ -172,9 +172,14 @@
             //Declare global wp database
             global $wpdb;
 
-            $results = [];
-
             $query = "";
+
+            $query = "DELETE FROM software WHERE soft_id = $soft_id";
+
+            //WPDB auto returns the number of affected rows
+            $result = $wpdb->query($query);
+
+            return $result;
         }
     }
 

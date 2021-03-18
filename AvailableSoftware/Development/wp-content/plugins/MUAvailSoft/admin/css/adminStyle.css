@@ -103,3 +103,9 @@
     
     
 }
+
+#bannerDiv {
+    margin-top: 1rem;
+    background-color: #00669b;
+    height: 3rem;
+}

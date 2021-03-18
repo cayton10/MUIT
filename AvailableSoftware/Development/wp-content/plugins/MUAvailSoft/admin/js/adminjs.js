@@ -318,7 +318,53 @@ $(document).ready(function(){
 
         packageArray = pullFormData();
 
-        console.log(packageArray);
+        packageArray['id'] = id;
+
+        $.ajax(
+            {
+                url: ajaxurl,
+                method: "POST",
+                dataType: "JSON",
+                data:
+                {
+                    action: "save_software_edits",
+                    data: packageArray
+                },
+                success: function(response)
+                {
+                    //If successful, call ajax function to add updated software package
+                    //To table.
+                        $.ajax({
+                            url: ajaxurl,
+                            type: "POST",
+                            dataType: "JSON",
+                            data: 
+                            {
+                                action: "add_software",
+                                data: packageArray
+                            },
+                            success: function(response)
+                            {
+                                alert("Software package updated");
+                                console.log("Package Added");
+                                //Empty form if successful
+                                if(response.success = true)
+                                {
+                                    alert(response);
+                                }
+                            },
+                            error: function(xhr, status, error)
+                            {
+                                console.log(xhr.responseText);
+                            }
+                        });
+                },
+                error: function(xhr, status, error)
+                {
+                    console.log(xhr.responseText)
+                }
+            }
+        )
 
 
                 
@@ -346,9 +392,7 @@ $(document).ready(function(){
             $('.osCheck').prop("checked", false);
 
 
-        var id = this.value;
-
-        
+        var id = this.value;     
         
         //Show the form
         $('#editSoftwareDiv').slideDown(800);
@@ -360,11 +404,12 @@ $(document).ready(function(){
                 dataType: "JSON",
                 data:
                 {
-                    action: "edit_software_package",
+                    action: "fetch_software_package",
                     data: id
                 },
                 success: function(response)
                 {
+                    console.log(response);
                     var soft = response['soft_package'][0];
                     var user = response['user_info'];
                     var os = response['operating_sys'];
