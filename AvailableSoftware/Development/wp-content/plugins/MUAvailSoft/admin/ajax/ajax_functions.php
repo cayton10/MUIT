@@ -102,6 +102,10 @@
 
 
         //WP Ajax calls require wp_die() at end of function
+        $response['success'] = true;
+        $response['message'] = "Software package added";
+        echo json_encode($response);
+        
         wp_die();
 
     }

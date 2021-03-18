@@ -79,79 +79,25 @@ $(document).ready(function(){
         //Call our checkbox error handlers
         var userChecks = checkUserBoxes();
         if(!userChecks)
+        {
+            alert("Please select user availability");
             return;
+        }
+            
         
         var osChecks = checkOsBoxes();
         if(!osChecks)
+        {
+            alert("Please select an operating system");
             return;
-
-
+        }
+            
     
         //Primary array to send to DB
         var packageArray = {};
-        var alternativesArray = [];
-        var searchTermsArray = [];
-        var users = [];
-        var operatingSystem = [];
-        var departments = [];
 
 
-        
-        //Load the software information into the main 'package' array at software index
-        packageArray['software'] = getSoftwareArray();
-        
-
-/* -------------------- GET ALTERNATIVE SOFTWARE EXAMPLES ------------------- */
-
-        var $alts = $('.altButton');
-
-        //If alternatives have been listed, create an array of appropriate info
-        if($alts.length)
-        {
-            $('.altButton').each(function(){
-                alternativesArray.push($(this).data('name'));
-            });
-
-            packageArray['alternatives'] = alternativesArray;
-        };
-
-        
-/* ------------------ GET SEARCH TERMS FOR ENTERED SOFTWARE ----------------- */
-
-        var $terms = $('.termButton');
-
-        //If search terms have been listed, create an array of appropriate info
-        if($terms.length)
-        {
-            $('.termButton').each(function(){
-                searchTermsArray.push($(this).data('term'));
-            });
-
-            packageArray['searchTerms'] = searchTermsArray;
-        };
-
-/* --------------------------- GET AVAILABLE USERS -------------------------- */
-
-        $('#userCheckBoxes input[type="checkbox"]:checked').each(function(){
-            users.push($(this).val());
-        });
-
-        //Add the users array to the package to send
-        packageArray['users'] = users;
-/* ------------------------- GET OPERATING SYSTEM(S) ------------------------ */
-
-        $('#osCheckBoxes input[type="checkbox"]:checked').each(function(){
-            operatingSystem.push($(this).val());
-        });
-
-        //Add os array to package to send
-        packageArray['os'] = operatingSystem;
-
-/* ----------------------------- GET DEPARTMENT ----------------------------- */
-
-        departments.push($('#departmentName').val());
-
-        packageArray['department'] = departments;
+        packageArray = pullFormData();
 
         //Construct the ajax request and fire 
         $.ajax({
@@ -165,8 +111,19 @@ $(document).ready(function(){
             },
             success: function(response)
             {
-                if(response['success'] == false)
-                alert(response['message']);
+                //Empty form if successful
+                if(response.success = true)
+                {
+                    //Resets all text fields
+                    document.getElementById("addSoftwareForm").reset();
+                    //Deletes all descriptor button tags
+                    $('.termButton').remove();
+                    $('.altButton').remove();
+                    //Resets user checkboxes
+                    $('.userCheck').removeAttr('disabled');
+
+                    alert(message);
+                }
             },
             error: function(xhr, status, error)
             {
@@ -338,11 +295,11 @@ $(document).ready(function(){
 
         //Grab software id of selected software package
         var id = document.getElementById("editSelectElement").value;
+        var packageArray = {};
 
         //Ensure checkbox groups are complete
         userChecked = $('.userCheck:checked').length;
 
-        alert(userChecked);
 
         if(!userChecked)
         {
@@ -352,13 +309,18 @@ $(document).ready(function(){
 
         osChecked = $('.osCheck:checked').length;
 
-        alert(osChecked);
 
         if(!osChecked)
         {
             alert("You must select a valid operating system");
             return;
         }
+
+        packageArray = pullFormData();
+
+        console.log(packageArray);
+
+
                 
     });
 
@@ -442,8 +404,6 @@ $(document).ready(function(){
                     {
                         $('#searchTermList').append("<li class='termButton' data-term='" + result.search_term + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.search_term + "   <span class='cancelTerm'>&#x2715<span></button></li>");
                     });
-
-                    console.log(response);
                 },
                 error: function(xhr, status, error)
                 {
@@ -515,5 +475,83 @@ $(document).ready(function(){
             }
         }
     });
+
+    /**
+     * pullFormData()
+     * Takes no parameters. Creates an object array of values from edit / add software
+     * forms. Returns object array for processing in appropriate add / edit function
+     */
+
+    function pullFormData()
+    {
+         //Primary array to send to DB
+         var packageArray = {};
+         var alternativesArray = [];
+         var searchTermsArray = [];
+         var users = [];
+         var operatingSystem = [];
+         var departments = [];
+ 
+ 
+         
+         //Load the software information into the main 'package' array at software index
+         packageArray['software'] = getSoftwareArray();
+         
+ 
+ /* -------------------- GET ALTERNATIVE SOFTWARE EXAMPLES ------------------- */
+ 
+         var $alts = $('.altButton');
+ 
+         //If alternatives have been listed, create an array of appropriate info
+         if($alts.length)
+         {
+             $('.altButton').each(function(){
+                 alternativesArray.push($(this).data('name'));
+             });
+ 
+             packageArray['alternatives'] = alternativesArray;
+         };
+ 
+         
+ /* ------------------ GET SEARCH TERMS FOR ENTERED SOFTWARE ----------------- */
+ 
+         var $terms = $('.termButton');
+ 
+         //If search terms have been listed, create an array of appropriate info
+         if($terms.length)
+         {
+             $('.termButton').each(function(){
+                 searchTermsArray.push($(this).data('term'));
+             });
+ 
+             packageArray['searchTerms'] = searchTermsArray;
+         };
+ 
+ /* --------------------------- GET AVAILABLE USERS -------------------------- */
+ 
+         $('#userCheckBoxes input[type="checkbox"]:checked').each(function(){
+             users.push($(this).val());
+         });
+ 
+         //Add the users array to the package to send
+         packageArray['users'] = users;
+ /* ------------------------- GET OPERATING SYSTEM(S) ------------------------ */
+ 
+         $('#osCheckBoxes input[type="checkbox"]:checked').each(function(){
+             operatingSystem.push($(this).val());
+         });
+ 
+         //Add os array to package to send
+         packageArray['os'] = operatingSystem;
+ 
+ /* ----------------------------- GET DEPARTMENT ----------------------------- */
+ 
+         departments.push($('#departmentName').val());
+ 
+         packageArray['department'] = departments;
+
+         return packageArray;
+
+    };
 
 });
