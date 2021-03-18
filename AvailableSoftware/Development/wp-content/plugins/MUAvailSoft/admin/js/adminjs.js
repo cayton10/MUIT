@@ -345,12 +345,11 @@ $(document).ready(function(){
                             },
                             success: function(response)
                             {
-                                alert("Software package updated");
-                                console.log("Package Added");
+                                
                                 //Empty form if successful
                                 if(response.success = true)
                                 {
-                                    alert(response);
+                                    alert("Software package updated");
                                 }
                             },
                             error: function(xhr, status, error)
