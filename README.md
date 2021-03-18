@@ -21,6 +21,16 @@ Software packages are being sent to php ajax handler script to process informati
 
 All relevant software information except Department can successfully be added to DB. Future meetings needed to determine strict business rules for department and how to proceed.
 
+
+## Admin Area
+
+### Edit Software
+Edit software functions similar to adding software. It actually uses the same function in the adminjs.js file 
+``` javascript
+array = pullData();
+```
+to grab all the information from the form, wrap it into an object array, and send it to the database for processing via ajax and php scripts.
+
 ## ToDo's:
 
 ### Smart Searching (Predictive Text)
@@ -38,3 +48,4 @@ Change wording for this link location. Make it clear that the information to ent
 ### Department Table
 
 A list of departments will be needed to move forward with this feature.
+
