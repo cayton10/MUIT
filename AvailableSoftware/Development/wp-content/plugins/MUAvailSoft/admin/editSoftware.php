@@ -38,7 +38,11 @@
 
                 </select>
             </div>
+            <div id="formSepBanner">
+            </div>
             <div id='editSoftwareDiv'>
+                <div id="bannerDiv">
+                </div>
                 <form action="" method="post" id='editSoftwareForm'>
                     <div class='addSoftwareGrid'>
                     <!-- Software input section -->
