@@ -21,6 +21,7 @@ Software packages are being sent to php ajax handler script to process informati
 
 All relevant software information except Department can successfully be added to DB. Future meetings needed to determine strict business rules for department and how to proceed.
 
+
 ## Admin Area
 
 ### Edit Software
@@ -29,3 +30,22 @@ Edit software functions similar to adding software. It actually uses the same fu
 array = pullData();
 ```
 to grab all the information from the form, wrap it into an object array, and send it to the database for processing via ajax and php scripts.
+
+## ToDo's:
+
+### Smart Searching (Predictive Text)
+
+As of <strong>2.19.21</strong> this functionality is working at 90% cap. 
+I still need to:
+- Style the dropdown divs
+- Style the anchor tags containing the DB keyword result
+- Fix the jQuery logic for adding the keyword to the list as a "button"
+
+### Download location
+
+Change wording for this link location. Make it clear that the information to enter should be the page containing the download link, not the link itself.
+
+### Department Table
+
+A list of departments will be needed to move forward with this feature.
+

@@ -69,6 +69,7 @@
         }
         
 /* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
+        
         //Control flow for !empty, being that user's aren't necessarily required
         //To enter information for search terms
         if(!empty($terms))
