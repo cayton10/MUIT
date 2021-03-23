@@ -3,6 +3,18 @@
     //Add config class autoloader dependency
     require_once(__DIR__ . '/../../config/config.php');
 
+    /** 
+     * Ajax handler to process the department entered by the user adding /
+     * editing software package(s). Queries DB to ensure a valid dept
+     * name exists.
+     */
+    function check_department($deptName)
+    {
+        //Response array to return to client
+        $response = [];
+                
+    }
+
 
 
     /**
@@ -69,6 +81,7 @@
         }
         
 /* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
+        
         //Control flow for !empty, being that user's aren't necessarily required
         //To enter information for search terms
         if(!empty($terms))

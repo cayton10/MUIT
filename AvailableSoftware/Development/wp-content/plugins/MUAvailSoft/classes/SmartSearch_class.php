@@ -34,6 +34,11 @@
                 $table = "soft_alternative";
                 $field = "alt_name";
             }
+            else if($dataField == "departments")
+            {
+                $table = "department";
+                $field = "dept_name";
+            }
 
             $query = "";
 
