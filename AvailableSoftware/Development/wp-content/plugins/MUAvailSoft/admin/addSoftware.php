@@ -56,7 +56,7 @@
 
                             </div>
 
-                <!-- Alternatives to Software Entered -->
+                        <!-- Alternatives to Software Entered -->
                         <h2><label for='softwareAlternatives'>Software Package Alternatives<label></h2>
                             <div class='smartSearchDiv' id='alternativeFields'>
                                 <input type='text' id='softwareAlternatives' placeholder="Ex: Google Sheets" class='softwareInput smartField' autocomplete='off' data-fieldType="alts">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                         
-                <!-- Operating System Section -->
+                        <!-- Operating System Section -->
                         <h2><label for='operatingSystem'>Operating System</label></h2>
                             <div class='osSection' id='osCheckBoxes'>
 
@@ -88,7 +88,7 @@
 
                             </div>
 
-                <!-- Associated Search Terms -->
+                        <!-- Associated Search Terms -->
                         <h2><label for='searchTerms'>Associated Search Terms</label></h2>
                             <div class='smartSearchDiv' id='searchTermsSection'>
                                 <input type='text' id='searchTerm' placeholder="Ex: Spreadsheets, Word Processor, etc." class='softwareInput smartField' data-fieldType="terms" autocomplete="off">
@@ -99,10 +99,17 @@
                                 </div>
                             </div>
 
-                <!-- Department Testing field -->
+                    </div>
+                    <div class='departmentGridColumn'>
+                        <!-- Department Testing field -->
                         <h2><label for='departmentField'>Available to Department:<label></h2>
-                            <div class='departmentField' id='departmentField'>
-                                <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput'>
+                            <div class='smartSearchDiv' id='departmentFieldSection'>
+                                <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput smartField' data-fieldType="departments" autocomplete="off">
+                                <div class="smartResults"></div>
+                                <button type="button" class="button-primary" id="addDepartment">Add</button>
+                                <div>
+                                    <ul id="departmentList"></ul>
+                                </div>
                             </div>
                     </div>
                 </div>

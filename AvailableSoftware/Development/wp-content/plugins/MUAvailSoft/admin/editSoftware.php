@@ -61,7 +61,7 @@
                                 <input id='softwareDownload' class='softwareInput' placeholder='https://portal.azure.com/?Microsoft_Azure_Education_correlationId=22e80e44-4b74-411b-9593-69e7ed40fc2f' type='url'></input>
                         </div>
 
-                    <!-- User information section -->
+                        <!-- User information section -->
                         <div class='userGridColumn'>
                             <h2><label for='userAvailability'>Available to Users</label></h2>
                                 <div id='userCheckBoxes' class='userCheckBoxes'>
@@ -80,7 +80,7 @@
 
                                 </div>
 
-                    <!-- Alternatives to Software Entered -->
+                             <!-- Alternatives to Software Entered -->
                             <h2><label for='softwareAlternatives'>Software Package Alternatives<label></h2>
                                 <div class='alternativeFields' id='alternativeFields'>
                                     <input type='text' id='softwareAlternatives' placeholder="Ex: Google Sheets" class='softwareInput'>
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                             
-                    <!-- Operating System Section -->
+                            <!-- Operating System Section -->
                             <h2><label for='operatingSystem'>Operating System</label></h2>
                                 <div class='osSection' id='osCheckBoxes'>
 
@@ -111,7 +111,7 @@
 
                                 </div>
 
-                    <!-- Associated Search Terms -->
+                            <!-- Associated Search Terms -->
                             <h2><label for='searchTerms'>Associated Search Terms</label></h2>
                                 <div class='searchTermsSection'>
                                     <input type='text' id='searchTerm' placeholder="Ex: Spreadsheets, Word Processor, etc." class='softwareInput'>
@@ -121,17 +121,24 @@
                                     </div>
                                 </div>
 
-                    <!-- Department Testing field -->
-                            <h2><label for='departmentField'>Available to Department:<label></h2>
-                                <div class='departmentField' id='departmentField'>
-                                    <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput'>
-                                </div>
 
                                 <!-- Submit edit form button -->
                                 <div id='editSoftSubmitButtonDiv'>
                                     <input type='submit' class='button-primary' id='submitEditSoftware' value='Submit Edits'></input>
                                 </div>
                         </div>
+                        <div class='departmentGridColumn'>
+                            <!-- Department Testing field -->
+                            <h2><label for='departmentField'>Available to Department:<label></h2>
+                                <div class='smartSearchDiv' id='departmentFieldSection'>
+                                    <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput smartField' data-fieldType="departments" autocomplete="off">
+                                    <div class="smartResults"></div>
+                                    <button type="button" class="button-primary" id="addDepartment">Add</button>
+                                    <div>
+                                        <ul id="departmentList"></ul>
+                                    </div>
+                                </div>
+                    </div>
                         
                     </div>
                     
