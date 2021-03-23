@@ -350,10 +350,13 @@ $(document).ready(function(){
                                 if(response.success = true)
                                 {
                                     alert("Software package updated");
+                                    
+                                    location.reload();
                                 }
                             },
                             error: function(xhr, status, error)
                             {
+                                alert(xhr.responseText);
                                 console.log(xhr.responseText);
                             }
                         });
