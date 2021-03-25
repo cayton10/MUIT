@@ -119,10 +119,11 @@ $(document).ready(function(){
                     //Deletes all descriptor button tags
                     $('.termButton').remove();
                     $('.altButton').remove();
+                    $('.deptButton').remove();
                     //Resets user checkboxes
                     $('.userCheck').removeAttr('disabled');
 
-                    alert(message);
+                    alert(response.message);
                 }
             },
             error: function(xhr, status, error)
@@ -217,6 +218,74 @@ $(document).ready(function(){
 
             $(this).parent('li').remove();
        });
+
+/* -------------------------------------------------------------------------- */
+/*                              ADD DEPARTMENT NAME                           */
+/* -------------------------------------------------------------------------- */
+
+    /**
+     * Function to add search terms associated with entered software package
+     * as visibile buttons which can be removed
+     */
+    
+    $('#addDepartment').on('click', function(e){
+
+        if($('#departmentName').val() == '')
+        {
+            return;
+        }
+
+        e.preventDefault();
+
+        //Get information from input field
+        var dept = $('#departmentName').val();
+
+        //Check if the department is listed in the DB, inform user if not
+        $.ajax({
+            url: ajaxurl,
+            dataType: "JSON",
+            method: "GET",
+            data: {
+                action: "check_department",
+                data: dept,
+            },
+            success: function(response) {
+                if(response.success === "true") {
+                    //Append the search terms <ul> with a list item button of name corresponding
+                    //to entered search term
+                    $('#departmentList').append("<li class='deptButton' data-id='" + response.id + "' data-term='" + response.name + "'><button type='button' class='button-secondary removeSearchTerm'>" + response.name + "   <span class='cancelTerm'>&#x2715<span></button></li>");
+                    //Clear input field for next entry
+                    $('#departmentName').val('');
+                    //Hide the smartSearch div if it's shown
+                    $('.smartResults').hide();
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error(xhr, status, error) {
+                console.log(xhr.responseText);
+                return;
+            }
+
+        })
+        
+
+        //Clear input field for next entry
+        $('#departmentName').val('');
+
+        //Hide the smartSearch div if it's shown
+        $('.smartResults').hide();
+   });
+
+   /**
+    * Function to remove software search term if buttons added are clicked prior to 
+    * submitting the form
+    */
+   $(document).on('click', '.removeSearchTerm', function(){
+
+        $(this).parent('li').remove();
+   });
 
 
 /* -------------------------------------------------------------------------- */
@@ -384,6 +453,10 @@ $(document).ready(function(){
         //Same with search terms
         if($('.termButton').length)
             $('.termButton').remove();
+
+        //Same with departments
+        if($('.deptButton').length)
+            $('.deptButton').remove();
         
         //Same with user checkboxes
         if($('.userCheck').length)
@@ -411,12 +484,12 @@ $(document).ready(function(){
                 },
                 success: function(response)
                 {
-                    console.log(response);
                     var soft = response['soft_package'][0];
                     var user = response['user_info'];
                     var os = response['operating_sys'];
                     var alts = response['soft_alts'];
                     var terms = response['search_terms'];
+                    var depts = response['departments'];
 
 
                     //Populate returned base software info
@@ -451,6 +524,13 @@ $(document).ready(function(){
                     {
                         $('#searchTermList').append("<li class='termButton' data-term='" + result.search_term + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.search_term + "   <span class='cancelTerm'>&#x2715<span></button></li>");
                     });
+
+                    //Populate returned department buttons
+                    $.each(depts, function(i, result)
+                    {
+                        $('#departmentList').append("<li class='deptButton' data-term='" + result.dept_name + "' data-id='" + result.dept_name + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.dept_name + "   <span class='cancelTerm'>&#x2715<span></button></li>");
+                        console.log(result);
+                    })
                 },
                 error: function(xhr, status, error)
                 {
@@ -593,8 +673,14 @@ $(document).ready(function(){
  
  /* ----------------------------- GET DEPARTMENT ----------------------------- */
  
-         departments.push($('#departmentName').val());
- 
+         var $depts = $('.deptButton');
+         
+         if($depts.length) {
+             $($depts).each(function() {
+                 departments.push($(this).data('id'));
+             });
+         }
+          
          packageArray['department'] = departments;
 
          return packageArray;

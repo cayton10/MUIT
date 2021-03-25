@@ -1,6 +1,10 @@
 # MUAvailSoft WordPress Plugin
 
+### Department Listing
+A redundant list of departments was used in this V.1 package of MUAvailSoft just to get the ball rolling and start development. This list could also be deployed to production, but it will likely have an adverse affect on UX for front end pages. 
 
+#### Week of 3.22.2021
+After being instructed to use the redundant department listing we've been given, functionality was added to the Add Software and Edit Software administrative plugin pages. Introducing functionality and tying the department functions into existing operations took some time and debugging.
 
 ### Smart Search (Auto Suggestion)
 
@@ -39,3 +43,6 @@ Spent most of the day removing or fixing bugs that I introduced to the system by
 ##### Database Interaction for Editing Software
 
 I decided it would be easiest to simply remove the entire software package and all associated data rather than update since each row of software has so many relationships with other tables. I figured it would pare down the complexity and significantly reduce development time. After the previous information is removed, all of the info from the editing form is inserted into the DB, albiet under a new unique PK.
+
+#### 3.25.2021
+

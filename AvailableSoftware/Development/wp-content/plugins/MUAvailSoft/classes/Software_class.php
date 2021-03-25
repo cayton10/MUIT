@@ -93,7 +93,7 @@
                 'soft_company' => $manu,
                 'soft_type' => $cat,
                 'soft_price' => $price,
-                'soft_description' => $desc,
+                'soft_description' => stripslashes($desc),
                 'soft_download' => $location
             );
 
@@ -153,9 +153,12 @@
                         WHERE soft_id = $soft_id";
             $results['search_terms'] = $wpdb->get_results($query);
 
-            /**
-             * Stubbed for departments (when we get info to move forward)
-             */
+            //Construct query #5 for department availability
+            $query = "SELECT t1.dept_id, t1.dept_name
+                        FROM department t1
+                        LEFT JOIN dept_software t2 ON t1.dept_id = t2.dept_id
+                        WHERE t2.soft_id = $soft_id";
+            $results['departments'] = $wpdb->get_results($query);
 
             return $results;
         }

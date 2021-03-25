@@ -8,13 +8,35 @@
      * editing software package(s). Queries DB to ensure a valid dept
      * name exists.
      */
-    function check_department($deptName)
+    function check_department()
     {
         //Response array to return to client
         $response = [];
-                
+
+        
+
+        $check = $_GET['data'];
+
+        $checkDept = new Department();
+        
+        $result = $checkDept->getDepartment($check);
+        
+        if(!empty($result)) {
+            $response['success'] = "true";
+            $response['id'] = $result[0]->dept_id;
+            $response['name'] = $result[0]->dept_name;
+        }
+        else {
+            $response['success'] = "false";
+            $response['message'] = "No department by that name.";
+        }
+
+        echo json_encode($response);
+
+        wp_die();
     }
 
+    add_action('wp_ajax_check_department', 'check_department');
 
 
     /**
@@ -109,14 +131,15 @@
 
 /* ---------------- ADD DEPARTMENT AVAILABILITY INFO (BRIDGE) --------------- */
 
-        //$department = new Department();
+        $department = new Department();
 
-        //$department->addDepartment($deptArray, $softID);
+        $department->addDepartment($deptArray, $softID);
 
 
         //WP Ajax calls require wp_die() at end of function
         $response['success'] = true;
         $response['message'] = "Software package added";
+
         echo json_encode($response);
 
         wp_die();

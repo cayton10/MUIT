@@ -11,50 +11,38 @@ class Department
         
     }
 
-    /*public function addDepartment($deptName, $soft_id)
+    public function addDepartment($deptName, $soft_id)
     {
         //Declare global wpdb
         global $wpdb;
 
         //Sort the department array
         sort($deptName);
+        $data = [];
 
         //Search for the department in department table
-        foreach()
-    }
-    */
+        foreach($deptName as $dept) 
+        {
+            $data['dept_id'] = $dept;
+            $data['soft_id'] = $soft_id; 
+        }
 
-    public function SearchString($dataField, $str)
+        //Insert loaded array as row in table 'soft_alternative
+        $wpdb->insert('dept_software', $data);
+    }
+    
+
+    public function getDepartment($str)
     {
         global $wpdb;
 
-        //WPDB doesn't automatically escape for strings so...
-        $wild = '%';
-        $secStr = $wild . $wpdb->esc_like($str) . $wild;
+        $query = '';
 
-        $table = "";
-        $field = "";
-        //Set up logic here
-        if($dataField == "terms")
-        {
-            $table = "search_terms";
-            $field = "search_term";
-        }
-        else if($dataField == "alts")
-        {
-            $table = "soft_alternative";
-            $field = "alt_name";
-        }
+        $query = "SELECT * FROM department
+                    WHERE dept_name = '" . $str . "'";
 
-        $query = "";
-
-        $query = $wpdb->prepare("SELECT $field AS 'keyword'
-                                    FROM $table
-                                    WHERE $field LIKE %s
-                                    ORDER BY $field", array($secStr));
-
-        $results = $wpdb->get_results($query);
-
-        return $results;
+        $result = $wpdb->get_results($query);
+       
+        return $result;
     }
 }
