@@ -57,16 +57,13 @@
         public function checkDuplicate($manu, $name)
         {
             global $wpdb;
-            $wild = '%';
-            $secName = $wild . $wpdb->esc_like($name) . $wild;
-            $secManu = $wild . $wpdb->esc_like($manu) . $wild;
 
             $query = "";
 
             $query = $wpdb->prepare("SELECT COUNT(soft_id) AS duplicates 
                                         FROM software
-                                        WHERE soft_company LIKE %s 
-                                        AND soft_name LIKE %s", array($secManu, $secName));
+                                        WHERE soft_company = %s
+                                        AND soft_name = %s", array($manu, $name));
 
             $results = $wpdb->get_results($query);
 

@@ -23,17 +23,24 @@
                 <!-- Software input section -->
                     <div class='softwareGridColumn'>
                         <h2><label for='softwareManufac'>Software Manufacturer</label></h2>
-                            <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' type='text' autocomplete="off" autocapitalize="on"></input>
+                            <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' type='text' autocomplete="off" autocapitalize="on" required></input>
                         <h2><label for='softwareName'>Software Package Name</label></h2>
-                            <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' type='text' autocomplete="off"></input>
+                            <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' type='text' autocomplete="off" required></input>
                         <h2><label for='softwareCat'>Software Category</label></h2>
-                            <input id='softwareCat' class='softwareInput' placeholder='I.E. Antivirus, Word Processor, etc.' type='text' autocomplete="off"></input>
+                            <select id='softwareCat' class='softwareInput' type='text' autocomplete="off" required>
+                                <option value='' selected disabled>Select Category</option>
+                                <option value='Antivirus'>Antivirus</option>
+                                <option value='Communication'>Communication</option>
+                                <option value='Math / Statistical Anaslysis'>Math / Statistical Analysis</option>
+                                <option value='Productivity'>Productivity</option>
+                                <option value='Project Management'>Project Management</option>
+                            </select>
                         <h2><label for='softwarePrice'>Software Package Price</label></h2>
-                            <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number'></input>
+                            <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number' required></input>
                         <h2><label for='softwareDesc'>Software Package Description</label></h2>
-                            <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.'></textarea>
+                            <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.' required></textarea>
                         <h2><label for='softwareDownload'>Software Download Location</label></h2>
-                            <input id='softwareDownload' class='softwareInput' placeholder='Preferably a link to download location.' type='text' autocomplete='off'></input>
+                            <input id='softwareDownload' class='softwareInput' placeholder='Preferably a link to download location.' type='text' autocomplete='off' required></input>
                             <input type='submit' class='button-primary' id='submitAddSoftware'></input>
                     </div>
 
@@ -104,7 +111,7 @@
                         <!-- Department Testing field -->
                         <h2><label for='departmentField'>Available to Department:<label></h2>
                             <div class='smartSearchDiv' id='departmentFieldSection'>
-                                <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput smartField' data-fieldType="departments" autocomplete="off">
+                                <input type='text' id='departmentName' placeholder="Ex: Computer Information Technology" class='softwareInput smartField' data-fieldType="departments" autocomplete="off" >
                                 <div class="smartResults"></div>
                                 <button type="button" class="button-primary" id="addDepartment">Add</button>
                                 <div>

@@ -25,7 +25,7 @@ $(document).ready(function(){
 
         softwareArray['manu'] = $('#softwareManufacturer').val();
         softwareArray['name'] = $('#softwareName').val();
-        softwareArray['cat'] = $('#softwareCat').val();
+        softwareArray['cat'] = $('#softwareCat option:selected').text();
         softwareArray['price'] = $('#softwarePrice').val();
         softwareArray['desc'] = $('#softwareDesc').val();
         softwareArray['download'] = $('#softwareDownload').val();
@@ -91,6 +91,13 @@ $(document).ready(function(){
             alert("Please select an operating system");
             return;
         }
+
+        var deptCheck = $('.deptButton').length;
+
+        if(deptCheck < 1) {
+            alert("Please add department availability");
+            return;
+        }
             
     
         //Primary array to send to DB
@@ -112,7 +119,7 @@ $(document).ready(function(){
             success: function(response)
             {
                 //Empty form if successful
-                if(response.success = true)
+                if(response.success === true)
                 {
                     //Resets all text fields
                     document.getElementById("addSoftwareForm").reset();
@@ -123,6 +130,10 @@ $(document).ready(function(){
                     //Resets user checkboxes
                     $('.userCheck').removeAttr('disabled');
 
+                    alert(response.message);
+                }
+                else if(response.success === false)
+                {
                     alert(response.message);
                 }
             },
@@ -164,6 +175,8 @@ $(document).ready(function(){
 
          //Hide the smartSearch div if it's shown
          $('.smartResults').hide();
+
+         $('#softwareAlternatives').focus();
 
      });
 
@@ -208,6 +221,8 @@ $(document).ready(function(){
 
             //Hide the smartSearch div if it's shown
             $('.smartResults').hide();
+
+            $('#searchTerm').focus();
        });
 
        /**
@@ -258,6 +273,8 @@ $(document).ready(function(){
                     $('#departmentName').val('');
                     //Hide the smartSearch div if it's shown
                     $('.smartResults').hide();
+
+                    $('#departmentName').focus();
                 }
                 else {
                     alert(response.message);

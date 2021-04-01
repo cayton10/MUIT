@@ -52,7 +52,14 @@
                             <h2><label for='softwareName'>Software Package Name</label></h2>
                                 <input id='softwareName' class='softwareInput' placeholder='I.E. Word, Excel, Photoshop' type='text' spellcheck='true' required></input>
                             <h2><label for='softwareCat'>Software Category</label></h2>
-                                <input id='softwareCat' class='softwareInput' placeholder='I.E. Antivirus, Word Processor, etc.' type='text' spellcheck="true" required></input>
+                                <select id='softwareCat' class='softwareInput' type='text' autocomplete="off">
+                                    <option value='default' selected disabled>Select Category</option>
+                                    <option value='Antivirus'>Antivirus</option>
+                                    <option value='Communication'>Communication</option>
+                                    <option value='Math / Statistical Anaslysis'>Math / Statistical Analysis</option>
+                                    <option value='Productivity'>Productivity</option>
+                                    <option value='Project Management'>Project Management</option>
+                                </select>
                             <h2><label for='softwarePrice'>Software Package Price</label></h2>
                                 <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number' required></input>
                             <h2><label for='softwareDesc'>Software Package Description</label></h2>
