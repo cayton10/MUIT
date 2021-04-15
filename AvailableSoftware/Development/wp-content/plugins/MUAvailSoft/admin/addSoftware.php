@@ -20,7 +20,7 @@
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
             <form action="" method="post" id='addSoftwareForm'>
                 <div class='addSoftwareGrid'>
-                <!-- Software input section -->
+                    <!-- Software input section -->
                     <div class='softwareGridColumn'>
                         <h2><label for='softwareManufac'>Software Manufacturer</label></h2>
                             <input id='softwareManufacturer' class='softwareInput' placeholder='I.E. Microsoft, Adobe, etc.' type='text' autocomplete="off" autocapitalize="on" required></input>
@@ -41,10 +41,9 @@
                             <textarea id='softwareDesc' class='softwareTextArea' placeholder='Please use manufacturer description of software package.' required></textarea>
                         <h2><label for='softwareDownload'>Software Download Location</label></h2>
                             <input id='softwareDownload' class='softwareInput' placeholder='Preferably a link to download location.' type='text' autocomplete='off' required></input>
-                            <input type='submit' class='button-primary' id='submitAddSoftware'></input>
                     </div>
 
-                <!-- User information section -->
+                    <!-- User information section -->
                     <div class='userGridColumn'>
                         <h2><label for='userAvailability'>Available to Users</label></h2>
                             <div id='userCheckBoxes' class='userCheckBoxes'>
@@ -119,6 +118,9 @@
                                 </div>
                             </div>
                     </div>
+                </div>
+                <div id="submitAddSoftwareForm">
+                    <input type='submit' class='button-primary' id='submitAddSoftware' value="Add Software"></input>
                 </div>
                 
             </form>

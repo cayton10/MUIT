@@ -85,6 +85,7 @@
             //Declare global wordpress database class var
             global $wpdb;
 
+
             $data = array(
                 'soft_name' => $name,
                 'soft_company' => $manu,
@@ -94,11 +95,14 @@
                 'soft_download' => $location
             );
 
+            //Escape special character for sanitization
+            $wpdb->escape($data);
             //Insert the software package
             $wpdb->insert('software', $data);
 
             //Return last auto-incremented ID for further data table input
             $lastID = $wpdb->insert_id;
+
 
             return $lastID;
         }
@@ -158,6 +162,45 @@
             $results['departments'] = $wpdb->get_results($query);
 
             return $results;
+        }
+
+        /**
+         * updateSoftware(int, string, string, string, double, string, string);
+         * Takes 7 parameters and updates the record for software in the software
+         * table
+         */
+        public function updateSoftware($id, $manu, $name, $cat, $price, $desc, $url)
+        {
+            $response = [];
+            global $wpdb;
+
+            $escapedString = esc_sql($desc);
+
+            $query = "";
+
+            $query = $wpdb->prepare("UPDATE software
+                                                    SET soft_name = $name,
+                                                        soft_company = $manu,
+                                                        soft_type = $cat,
+                                                        soft_price = $price,
+                                                        soft_description = $escapedString,
+                                                        soft_download = $url
+                                                    WHERE soft_id = $id");
+            
+            $results = $wpdb->get_results($query);
+
+            if($results === false)
+            {
+                $response['success'] = true;
+                $response['message'] = "Software updated successfully.";
+            }
+            else
+            {
+                $response['success'] = false;
+                $response['message'] = "Could not update software details.";
+            }
+
+            return $response;
         }
 
         /**

@@ -224,6 +224,9 @@
           //to this problem, but the implementation will probably take a good 8 hours.
           //Deleting the software id and inserting the new info will take less time
 
+          //print_r($package);
+          $response = [];
+
           $softID = $package['id'];
           $software = $package['software'];
           $users = $package['users'];
@@ -239,15 +242,16 @@
           $name = htmlspecialchars(trim($software['name']));
           $cat = htmlspecialchars(trim($software['cat']));
           $price = htmlspecialchars(trim($software['price']));
-          $desc = htmlspecialchars(trim($software['desc']));
+          $desc = trim($software['desc']);
           $download = htmlspecialchars(trim($software['download']));
 
           $sftware = new Software();
 
+          $response = $sftware->updateSoftware($softID, $name, $manu, $cat, $price, $desc, $download);
           //Remove the software so we can insert updated data.
-          $result = $sftware->removeSoftware($softID);
-
-          echo json_encode($result);
+          //$result = $sftware->removeSoftware($softID);
+          echo json_encode($response);
+          //echo json_encode($result);
           wp_die();
       }
 

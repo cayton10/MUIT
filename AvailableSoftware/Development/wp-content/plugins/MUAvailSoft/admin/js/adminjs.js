@@ -501,6 +501,7 @@ $(document).ready(function(){
                 },
                 success: function(response)
                 {
+                    console.log(response);
                     var soft = response['soft_package'][0];
                     var user = response['user_info'];
                     var os = response['operating_sys'];
@@ -545,7 +546,7 @@ $(document).ready(function(){
                     //Populate returned department buttons
                     $.each(depts, function(i, result)
                     {
-                        $('#departmentList').append("<li class='deptButton' data-term='" + result.dept_name + "' data-id='" + result.dept_name + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.dept_name + "   <span class='cancelTerm'>&#x2715<span></button></li>");
+                        $('#departmentList').append("<li class='deptButton' data-term='" + result.dept_name + "' data-id='" + result.dept_id + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.dept_name + "   <span class='cancelTerm'>&#x2715<span></button></li>");
                         console.log(result);
                     })
                 },

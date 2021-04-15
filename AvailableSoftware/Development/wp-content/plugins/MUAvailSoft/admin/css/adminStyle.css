@@ -109,3 +109,15 @@
     background-color: #00669b;
     height: 3rem;
 }
+
+/* ------------------------ ADD SOFTWARE SUBMIT AREA ------------------------ */
+#submitAddSoftwareForm {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+#submitAddSoftware {
+    padding-top:.5rem;
+    padding-bottom:.5rem;
+}
