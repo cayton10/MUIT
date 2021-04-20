@@ -59,7 +59,6 @@
         $osArray = $package['os'];
         $deptArray = $package['department'];
 
-
         
         //Store all data sent from form into variables
         $manu = htmlspecialchars(trim($software['manu']));
@@ -223,6 +222,8 @@
           //comparing edits to what's in DB tables. I came up with some solutions
           //to this problem, but the implementation will probably take a good 8 hours.
           //Deleting the software id and inserting the new info will take less time
+          //Not to mention the primary purpose of this system is to READ. UPDATE will
+          //be happening far less, so this is a better use of time
 
           //print_r($package);
           $response = [];
@@ -236,23 +237,87 @@
           $deptArray = $package['department'];
 
 
-        
           //Store all data sent from form into variables
           $manu = htmlspecialchars(trim($software['manu']));
           $name = htmlspecialchars(trim($software['name']));
           $cat = htmlspecialchars(trim($software['cat']));
           $price = htmlspecialchars(trim($software['price']));
-          $desc = trim($software['desc']);
+          $desc = htmlspecialchars(trim($software['desc']));
           $download = htmlspecialchars(trim($software['download']));
 
           $sftware = new Software();
 
-          $response = $sftware->updateSoftware($softID, $name, $manu, $cat, $price, $desc, $download);
-          //Remove the software so we can insert updated data.
-          //$result = $sftware->removeSoftware($softID);
-          echo json_encode($response);
-          //echo json_encode($result);
-          wp_die();
+          //First delete the package to cascade deletion to all tables
+          $response = $sftware->removeSoftware($softID);
+
+          if($response < 1)
+          {
+              $response['success'] = false;
+              $response['message'] = "Update edits failed at deleting software package.";
+              echo json_encode($response);
+              wp_die();  
+          }
+
+          //Now reinsert the updated information
+          $softID = $sftware->addSoftware($manu, $name, $cat, $price, $desc, $download);
+
+          //Inefficient and repeating code, but this needs done like yesterday
+          /* ------------------------- ADD SOFTWARE_USER TO DB ------------------------ */
+        
+        //Instaniate object of User class
+        $user = new User();
+
+        foreach($users as $key => $value)
+        {
+            //Get the appropriate userID value from the userType string
+            $userID = $user->getUserID($value);
+            
+            //Insert the record for software_user table
+            $user->addSoftwareUser(1, $softID, $userID);
+        }
+        
+/* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
+        
+        //Control flow for !empty, being that user's aren't necessarily required
+        //To enter information for search terms
+        if(!empty($terms))
+        {
+            $addTerm = new SearchTerm();
+            
+            $addTerm->addSearchTerms($terms, $softID);
+        }
+
+/* ------------------ ADD ALTERNATIVE SOFTWARE NAMES TO DB ------------------ */
+
+        if(!empty($alts))
+        {
+            $addAlt = new SoftwareAlternative();
+
+
+            $addAlt->addAlternatives($alts, $softID);
+        }
+
+/* ---------------------- ADD OPERATING SYSTEM(S) TO DB --------------------- */
+
+        $operSystem = new OperatingSystem();
+
+        $operSystem->addOperatingSystem($osArray, $softID);
+
+/* ---------------- ADD DEPARTMENT AVAILABILITY INFO (BRIDGE) --------------- */
+
+        $department = new Department();
+
+        $department->addDepartment($deptArray, $softID);
+
+
+        //WP Ajax calls require wp_die() at end of function
+        $response['success'] = true;
+        $response['message'] = "Software package added";
+
+        echo json_encode($response);
+
+        wp_die();
+
       }
 
       add_action('wp_ajax_save_software_edits', 'save_software_edits');

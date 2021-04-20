@@ -20,15 +20,20 @@ class Department
         sort($deptName);
         $data = [];
 
+        print_r($deptName);
+
         //Search for the department in department table
         foreach($deptName as $dept) 
         {
-            $data['dept_id'] = $dept;
-            $data['soft_id'] = $soft_id; 
+            $data = array(
+                'dept_id' => $dept,
+                'soft_id' => $soft_id,
+            ); 
+
+            //Insert loaded array as row in table 'soft_alternative
+            $wpdb->insert('dept_software', $data);
         }
 
-        //Insert loaded array as row in table 'soft_alternative
-        $wpdb->insert('dept_software', $data);
     }
     
 

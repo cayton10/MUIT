@@ -25,7 +25,7 @@ $(document).ready(function(){
 
         softwareArray['manu'] = $('#softwareManufacturer').val();
         softwareArray['name'] = $('#softwareName').val();
-        softwareArray['cat'] = $('#softwareCat option:selected').text();
+        softwareArray['cat'] = $('#softwareCat option:selected').val();
         softwareArray['price'] = $('#softwarePrice').val();
         softwareArray['desc'] = $('#softwareDesc').val();
         softwareArray['download'] = $('#softwareDownload').val();
@@ -404,6 +404,8 @@ $(document).ready(function(){
 
         packageArray = pullFormData();
 
+        console.log(packageArray);
+
         packageArray['id'] = id;
 
         $.ajax(
@@ -501,7 +503,6 @@ $(document).ready(function(){
                 },
                 success: function(response)
                 {
-                    console.log(response);
                     var soft = response['soft_package'][0];
                     var user = response['user_info'];
                     var os = response['operating_sys'];
@@ -509,6 +510,7 @@ $(document).ready(function(){
                     var terms = response['search_terms'];
                     var depts = response['departments'];
 
+                    console.log(soft['soft_type']);
 
                     //Populate returned base software info
                     $('#softwareManufacturer').val(soft['soft_company']);
@@ -547,7 +549,6 @@ $(document).ready(function(){
                     $.each(depts, function(i, result)
                     {
                         $('#departmentList').append("<li class='deptButton' data-term='" + result.dept_name + "' data-id='" + result.dept_id + "'><button type='button' class='button-secondary removeSearchTerm'>" + result.dept_name + "   <span class='cancelTerm'>&#x2715<span></button></li>");
-                        console.log(result);
                     })
                 },
                 error: function(xhr, status, error)
@@ -626,7 +627,6 @@ $(document).ready(function(){
      * Takes no parameters. Creates an object array of values from edit / add software
      * forms. Returns object array for processing in appropriate add / edit function
      */
-
     function pullFormData()
     {
          //Primary array to send to DB

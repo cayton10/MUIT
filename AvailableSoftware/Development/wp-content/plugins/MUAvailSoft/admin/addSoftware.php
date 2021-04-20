@@ -29,11 +29,11 @@
                         <h2><label for='softwareCat'>Software Category</label></h2>
                             <select id='softwareCat' class='softwareInput' type='text' autocomplete="off" required>
                                 <option value='' selected disabled>Select Category</option>
-                                <option value='Antivirus'>Antivirus</option>
-                                <option value='Communication'>Communication</option>
-                                <option value='Math / Statistical Anaslysis'>Math / Statistical Analysis</option>
-                                <option value='Productivity'>Productivity</option>
-                                <option value='Project Management'>Project Management</option>
+                                <option value='virus'>Antivirus</option>
+                                <option value='comm'>Communication</option>
+                                <option value='math'>Math / Statistical Analysis</option>
+                                <option value='prod'>Productivity</option>
+                                <option value='mgmt'>Project Management</option>
                             </select>
                         <h2><label for='softwarePrice'>Software Package Price</label></h2>
                             <input id='softwarePrice' class='softwareInput' placeholder='199.99'  step='0.01' type='number' required></input>
