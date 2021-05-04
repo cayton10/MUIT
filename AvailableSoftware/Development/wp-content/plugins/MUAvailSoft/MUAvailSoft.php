@@ -24,6 +24,7 @@
         require_once plugin_dir_path( __FILE__ ) . 'admin/settings-page.php';
         require_once plugin_dir_path( __FILE__ ) . 'admin/addSoftware.php';
         require_once plugin_dir_path( __FILE__ ) . 'admin/editSoftware.php';
+        require_once plugin_dir_path( __FILE__ ) . 'admin/removeSoftware.php';
         require_once plugin_dir_path( __FILE__ ) . 'config/config.php'; //For touching DB
         //Include dependency for ajax handler functions
         require_once plugin_dir_path( __FILE__ ) . 'admin/ajax/ajax_functions.php';

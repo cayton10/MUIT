@@ -1,5 +1,10 @@
 # MUAvailSoft WordPress Plugin
 
+## Updates to ajax_functions.php in admin directory
+
+### 5.4.2021
+Since the ajax function to add software is a long one that instantiates multiple class objects and calls their methods, I've added a little more robust error handling such that if a particular insert fails, the user can check the console to find out where it failed.
+
 ### Department Listing
 A redundant list of departments was used in this V.1 package of MUAvailSoft just to get the ball rolling and start development. This list could also be deployed to production, but it will likely have an adverse affect on UX for front end pages. 
 

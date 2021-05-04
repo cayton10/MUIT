@@ -13,6 +13,7 @@ class OperatingSystem
 
     public function addOperatingSystem($osArray, $soft_id)
     {
+        $response = [];
         global $wpdb;
 
         foreach($osArray as $os)
@@ -22,7 +23,20 @@ class OperatingSystem
                 'soft_id' => $soft_id
             );
 
-            $wpdb->insert('software_platform', $data);
+            $result = $wpdb->insert('software_platform', $data);
+
+            if($result < 1)
+            {
+                $response['success'] = false;
+                $response['message'] = "Could not add operating system id: '" . $os . "'";
+
+                return $response;
+            }
         }
+
+        $response['success'] = true;
+        $response['message'] = "Operating system info added successfully.";
+
+        return $response;
     }
 }

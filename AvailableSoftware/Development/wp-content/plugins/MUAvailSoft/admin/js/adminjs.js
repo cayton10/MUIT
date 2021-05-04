@@ -510,7 +510,6 @@ $(document).ready(function(){
                     var terms = response['search_terms'];
                     var depts = response['departments'];
 
-                    console.log(soft['soft_type']);
 
                     //Populate returned base software info
                     $('#softwareManufacturer').val(soft['soft_company']);

@@ -39,6 +39,9 @@
     add_action('wp_ajax_check_department', 'check_department');
 
 
+/* -------------------------------------------------------------------------- */
+/*                            ADD SOFTWARE FUNCTION                           */
+/* -------------------------------------------------------------------------- */
     /**
      * Function acts as ajax handler to process software added by the admin
      * to the database. Creates objects of all required class functions to 
@@ -87,6 +90,15 @@
         //Adds all relevant software information and stores last inserted ID
         $softID = $soft->addSoftware($manu, $name, $cat, $price, $desc, $download);
 
+        //Add some error handling to return appropriate info to dev
+        if($softID < 1)
+        {
+            $response['success'] = false;
+            $response['message'] = "A problem with adding software has occurred. Check ajax_functions.php in this plugin.";
+            echo json_encode($response);
+            wp_die();
+        }
+
 /* ------------------------- ADD SOFTWARE_USER TO DB ------------------------ */
         
         //Instaniate object of User class
@@ -98,7 +110,16 @@
             $userID = $user->getUserID($value);
             
             //Insert the record for software_user table
-            $user->addSoftwareUser(1, $softID, $userID);
+            $result = $user->addSoftwareUser(1, $softID, $userID);
+
+            //Error handling
+            if($result < 1)
+            {
+                $response['success'] = false;
+                $response['message'] = "A problem with adding software users has occurred. Check ajax_functions.php in this plugin.";
+                echo json_encode($response);
+                wp_die();
+            }
         }
         
 /* ------------------------- ADD SEARCH TERMS TO DB ------------------------- */
@@ -108,8 +129,13 @@
         if(!empty($terms))
         {
             $addTerm = new SearchTerm();
-            
-            $addTerm->addSearchTerms($terms, $softID);
+            $result = $addTerm->addSearchTerms($terms, $softID);
+
+            if($result['success'] == false)
+            {
+                echo json_encode($result);
+                wp_die();
+            }
         }
 
 /* ------------------ ADD ALTERNATIVE SOFTWARE NAMES TO DB ------------------ */
@@ -117,22 +143,36 @@
         if(!empty($alts))
         {
             $addAlt = new SoftwareAlternative();
+            $result = $addAlt->addAlternatives($alts, $softID);
 
-
-            $addAlt->addAlternatives($alts, $softID);
+            if($result['success'] == false)
+            {
+                echo json_encode($result);
+                wp_die();
+            }
         }
 
 /* ---------------------- ADD OPERATING SYSTEM(S) TO DB --------------------- */
 
         $operSystem = new OperatingSystem();
 
-        $operSystem->addOperatingSystem($osArray, $softID);
+        $os = $operSystem->addOperatingSystem($osArray, $softID);
+        if($os['success'] == false)
+        {
+            echo json_encode($os);
+            wp_die();
+        }
 
 /* ---------------- ADD DEPARTMENT AVAILABILITY INFO (BRIDGE) --------------- */
 
         $department = new Department();
 
-        $department->addDepartment($deptArray, $softID);
+        $deptConfirm = $department->addDepartment($deptArray, $softID);
+        if($deptConfirm['success'] == false)
+        {
+            echo json_encode($deptConfirm);
+            wp_die();
+        }
 
 
         //WP Ajax calls require wp_die() at end of function

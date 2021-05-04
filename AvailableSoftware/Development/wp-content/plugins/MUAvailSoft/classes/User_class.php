@@ -47,7 +47,9 @@
                 'user_id' => $user_id
             );
 
-            $wpdb->insert('software_user', $data);
+            $result = $wpdb->insert('software_user', $data);
+
+            return $result;
 
         }
     }
