@@ -23,7 +23,7 @@
             <div id='softwareSelectDiv' class='softwareEditSelect'>
                 <h2><label for='softwareSelect'>Select Software Package to Edit</h2></label>
                 <select id='editSelectElement'>
-                    <option selected disabled hidden>Select Software</option>
+                    <option selected disabled hidden value="-1">Select Software</option>
                 <!-- select options drawn from database -->
                 <?php
                     $output = "";

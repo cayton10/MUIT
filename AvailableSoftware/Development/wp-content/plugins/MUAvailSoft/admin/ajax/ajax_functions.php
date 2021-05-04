@@ -187,6 +187,41 @@
 
     add_action('wp_ajax_add_software', 'add_software');
 
+/* -------------------------------------------------------------------------- */
+/*                          REMOVE SOFTWARE FUNCTION                          */
+/* -------------------------------------------------------------------------- */
+    /**
+     * Function acts as ajax handler for removal of user selected software
+     * package from "removeSoftware.php" admin page.
+     */
+    function remove_software()
+    {
+        $response = [];
+        //pick our software id
+        $package = $_REQUEST['data'];
+
+        $soft = new Software();
+
+        $result = $soft->removeSoftware($package);
+
+        if($result < 1)
+        {
+            $response['success'] = false;
+            $response['message'] = "An error occurred. Could not delete software package.";
+
+            echo json_encode($response);
+            wp_die();
+        }
+
+        $response['success'] = true;
+        $response['message'] = "Software package removed successfully.";
+
+        echo json_encode($response);
+        wp_die();
+    }
+
+    add_action('wp_ajax_remove_software', 'remove_software');
+
 
 /* -------------------------------------------------------------------------- */
 /*                  SMART SEARCH FUNCTIONALITY ON DATA ENTRY                  */

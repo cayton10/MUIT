@@ -35,13 +35,13 @@ $(document).ready(function(){
     }
 
     
-/* -------------------------------------------------------------------------- */
-/*                           CHECKBOX ERROR HANDLING                          */
-/* -------------------------------------------------------------------------- */
-/**
- * Function checks if user type and operating system checkboxes have been selected
- * and returns appropriate message.
- */
+    /* -------------------------------------------------------------------------- */
+    /*                           CHECKBOX ERROR HANDLING                          */
+    /* -------------------------------------------------------------------------- */
+    /**
+     * Function checks if user type and operating system checkboxes have been selected
+     * and returns appropriate message.
+     */
 
     function checkUserBoxes()
     {
@@ -64,9 +64,9 @@ $(document).ready(function(){
         return osChecked;
     }
 
-/* -------------------------------------------------------------------------- */
-/*                      SUBMIT ADD SOFTWARE FORM FUNCTION                     */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                      SUBMIT ADD SOFTWARE FORM FUNCTION                     */
+    /* -------------------------------------------------------------------------- */
 
     /**
      * FUNCTION TO ADD SOFTWARE TO DATABASE VIA AJAX
@@ -145,9 +145,9 @@ $(document).ready(function(){
 
     });
 
-/* -------------------------------------------------------------------------- */
-/*                       ADD ALTERNATIVE SOFTWARE NAMES                       */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                       ADD ALTERNATIVE SOFTWARE NAMES                       */
+    /* -------------------------------------------------------------------------- */
 
     /**
      * Function to add alternative software packages to array for db storage
@@ -191,9 +191,9 @@ $(document).ready(function(){
       });
 
 
-/* -------------------------------------------------------------------------- */
-/*                              ADD SEARCH TERMS                              */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                              ADD SEARCH TERMS                              */
+    /* -------------------------------------------------------------------------- */
 
       /**
        * Function to add search terms associated with entered software package
@@ -234,9 +234,9 @@ $(document).ready(function(){
             $(this).parent('li').remove();
        });
 
-/* -------------------------------------------------------------------------- */
-/*                              ADD DEPARTMENT NAME                           */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                              ADD DEPARTMENT NAME                           */
+    /* -------------------------------------------------------------------------- */
 
     /**
      * Function to add search terms associated with entered software package
@@ -305,9 +305,9 @@ $(document).ready(function(){
    });
 
 
-/* -------------------------------------------------------------------------- */
-/*            ADD SUGGESTED KEYWORD TO INPUT FIELD ON CLICK / ENTER           */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*            ADD SUGGESTED KEYWORD TO INPUT FIELD ON CLICK / ENTER           */
+    /* -------------------------------------------------------------------------- */
 
        /**
         * Function adds the suggested "smart searched" keyword retrieved
@@ -335,9 +335,9 @@ $(document).ready(function(){
         
 
 
-/* -------------------------------------------------------------------------- */
-/*                  PREVENT OTHER SELECTION WITH 'ALL USERS'                  */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                  PREVENT OTHER SELECTION WITH 'ALL USERS'                  */
+    /* -------------------------------------------------------------------------- */
 
        /**
         * If a user is adding software and selects the "All Users" checkbox,
@@ -366,9 +366,9 @@ $(document).ready(function(){
 
 
 
-/* -------------------------------------------------------------------------- */
-/*                            EDIT SOFTWARE JQUERY                            */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                            EDIT SOFTWARE JQUERY                            */
+    /* -------------------------------------------------------------------------- */
     $('#editSoftwareDiv').hide();
 
     /**
@@ -454,15 +454,12 @@ $(document).ready(function(){
                     console.log(xhr.responseText)
                 }
             }
-        )
-
-
-                
+        )       
     });
 
-/* -------------------------------------------------------------------------- */
-/*                  ON EDITSOFTWAREFORM CHANGE, LOAD DETAILS                  */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                  ON EDITSOFTWAREFORM CHANGE, LOAD DETAILS                  */
+    /* -------------------------------------------------------------------------- */
     $('#editSelectElement').on('change', function()
     {
         //If alternative buttons already on page, remove them
@@ -559,9 +556,9 @@ $(document).ready(function(){
     });
 
 
-/* -------------------------------------------------------------------------- */
-/*                     SMART SEARCH FOR DATA ENTRY FIELDS                     */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                     SMART SEARCH FOR DATA ENTRY FIELDS                     */
+    /* -------------------------------------------------------------------------- */
     $('.smartField').keyup(function()
     {
         var element = $(this);
@@ -642,7 +639,7 @@ $(document).ready(function(){
          packageArray['software'] = getSoftwareArray();
          
  
- /* -------------------- GET ALTERNATIVE SOFTWARE EXAMPLES ------------------- */
+     /* -------------------- GET ALTERNATIVE SOFTWARE EXAMPLES ------------------- */
  
          var $alts = $('.altButton');
  
@@ -657,7 +654,7 @@ $(document).ready(function(){
          };
  
          
- /* ------------------ GET SEARCH TERMS FOR ENTERED SOFTWARE ----------------- */
+    /* ------------------ GET SEARCH TERMS FOR ENTERED SOFTWARE ----------------- */
  
          var $terms = $('.termButton');
  
@@ -671,7 +668,7 @@ $(document).ready(function(){
              packageArray['searchTerms'] = searchTermsArray;
          };
  
- /* --------------------------- GET AVAILABLE USERS -------------------------- */
+    /* --------------------------- GET AVAILABLE USERS -------------------------- */
  
          $('#userCheckBoxes input[type="checkbox"]:checked').each(function(){
              users.push($(this).val());
@@ -679,7 +676,7 @@ $(document).ready(function(){
  
          //Add the users array to the package to send
          packageArray['users'] = users;
- /* ------------------------- GET OPERATING SYSTEM(S) ------------------------ */
+    /* ------------------------- GET OPERATING SYSTEM(S) ------------------------ */
  
          $('#osCheckBoxes input[type="checkbox"]:checked').each(function(){
              operatingSystem.push($(this).val());
@@ -688,7 +685,7 @@ $(document).ready(function(){
          //Add os array to package to send
          packageArray['os'] = operatingSystem;
  
- /* ----------------------------- GET DEPARTMENT ----------------------------- */
+    /* ----------------------------- GET DEPARTMENT ----------------------------- */
  
          var $depts = $('.deptButton');
          
@@ -701,7 +698,60 @@ $(document).ready(function(){
          packageArray['department'] = departments;
 
          return packageArray;
-
     };
+
+    /* -------------------------------------------------------------------------- */
+    /*                          REMOVE SOFTWARE FUNCTION                          */
+    /* -------------------------------------------------------------------------- */
+    $('#removeSoftwareButton').on("click", function() {
+        
+        //Capture the information we'll use
+        let packageID = $('#editSelectElement option:selected').val();
+        let packageName = $('#editSelectElement option:selected').html();
+
+        //If it's a relevant option...
+        if(packageID != "-1") {
+
+            //Show a confirmation prompt and handle with ajax punt
+            if(window.confirm("Ready to delete " + packageName + "?")) {
+                $.ajax(
+                    {
+                        url: ajaxurl,
+                        method: "POST",
+                        dataType: "JSON",
+                        data: 
+                        {
+                            action: "remove_software",
+                            data: packageID
+                        },
+                        success: function(response)
+                        {
+                            //Inform user and reload window
+                            if(response['success']) {
+                                alert(response['message']);
+
+                                window.location.reload();
+                            }
+                            else {
+                                alert(response['message']);
+                            }
+                        },
+                        error: function(xhr, status, error)
+                        {
+                            console.log(xhr.responseText);
+                        }
+                    }
+                )
+            }
+            else {
+                return;
+            }
+        }
+       
+
+
+        
+        return;
+    });
 
 });
