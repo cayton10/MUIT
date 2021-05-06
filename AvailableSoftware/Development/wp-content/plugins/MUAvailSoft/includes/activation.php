@@ -11,6 +11,21 @@
 
         //Require for dbDelta
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+        $deptArray = array();
+
+        $fstream = fopen(dirname(__FILE__) . "/departments.txt", "r") or wp_die("Can't");
+
+        while(($line=fgets($fstream)) !== false) {
+            array_push($deptArray, $line);
+        }
+
+        fclose($depts);
+
+        wp_die(print_r($deptArray));
+        
+
+        
         /* ------------------- CREATE ALL REQUIRED DATABASE TABLES ------------------ */
         
         global $wpdb;
@@ -21,7 +36,8 @@
          * NOTE: In order to limit the use of dbDelta calls, IF NOT EXISTS cannot be used
          * in these queries. See: https://www.youtube.com/watch?v=QYCQ4HINfRc
          * The only way I've found to create all tables and structures is to use CREATE TABLE
-         * alone.
+         * alone. I tested these queries with dbDelta every time I added a new one / or did
+         * an insert. Hopefully this continues to behave appropriately.
          */
 
         //Software table creation
@@ -51,9 +67,10 @@
                     ) {$collate};";
         
         $table = "operating_system";
+        $key = "os_id";
 
         //Check if table already has info:
-        $result = check_table($table);
+        $result = check_table($table, $key);
 
         if(count($result) == 0)
         {
@@ -65,9 +82,99 @@
                     (5, 'Android');";
         }
 
+        //User table creation
+        $sql .= "CREATE TABLE `user` (
+                    `user_id` int NOT NULL,
+                    `user_type` varchar(8) NOT NULL,
+                    PRIMARY KEY (`user_id`)
+                    ) {$collate};";
+
+        $table = "user";
+        $key = "user_id";
+        $result = check_table($table, $key);
+
+        if(count($result) == 0)
+        {
+            $sql .= "INSERT INTO `user` (`user_id`, `user_type`) VALUES
+                        (1, 'student'),
+                        (2, 'faculty'),
+                        (3, 'staff'),
+                        (4, 'all');";
+        }
+
+        //Search terms table creation
+        $sql .= "CREATE TABLE `search_terms` (
+                    `search_id` int NOT NULL AUTO_INCREMENT,
+                    `search_term` varchar(18) NOT NULL,
+                    `soft_id` int NOT NULL,
+                    PRIMARY KEY (`search_id`)
+                ) {$collate};";
+        //FK Constraints
+        $sql .= "ALTER TABLE `search_terms`
+                    ADD CONSTRAINT `FK_st_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                COMMIT;";
+
+        
+        //Software alternative table creation
+        $sql .= "CREATE TABLE `soft_alternative` (
+                    `alt_id` int NOT NULL AUTO_INCREMENT,
+                    `alt_name` varchar(45) NOT NULL,
+                    `soft_id` int NOT NULL,
+                    PRIMARY KEY (`alt_id`)
+                ) {$collate};";
+        //FK Constraints
+        $sql .= "ALTER TABLE `soft_alternative`
+                    ADD CONSTRAINT `FK_alternative` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+                COMMIT;";
+
+        
+        //Software user table creation
+        $sql .= "CREATE TABLE `software_user` (
+                    `su_id` int NOT NULL AUTO_INCREMENT,
+                    `su_eligible` tinyint(1) NOT NULL,
+                    `soft_id` int NOT NULL,
+                    `user_id` int NOT NULL,
+                    PRIMARY KEY (`su_id`)
+                ) {$collate};";
+        //FK Constraints
+        $sql .= "ALTER TABLE `software_user`
+                    ADD CONSTRAINT `FK_su_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                    ADD CONSTRAINT `FK_su_soft_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+                COMMIT;";
+
+
+        //Department software table creation
+        $sql .= "CREATE TABLE `dept_software` (
+                    `dept_soft_id` int NOT NULL AUTO_INCREMENT,
+                    `dept_id` int NOT NULL,
+                    `soft_id` int NOT NULL,
+                    PRIMARY KEY (`dept_soft_id`)
+                ) {$collate};";
+        //FK Constraints
+        $sql .= "ALTER TABLE `dept_software`
+                    ADD CONSTRAINT `FK_ds_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                    ADD CONSTRAINT `FK_ds_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+                COMMIT;";
+
+
+        //Software platform table creation
+        $sql .= "CREATE TABLE `software_platform` (
+                    `soft_plat_id` int NOT NULL AUTO_INCREMENT,
+                    `os_id` int NOT NULL,
+                    `soft_id` int NOT NULL,
+                    PRIMARY KEY (`soft_plat_id`)
+                ) {$collate};";
+        //FK Constraints
+        $sql .= "ALTER TABLE `software_platform`
+                    ADD CONSTRAINT `FK_sp_os_id` FOREIGN KEY (`os_id`) REFERENCES `operating_system` (`os_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                    ADD CONSTRAINT `FK_sp_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+                COMMIT;";
+
+        //Check department table for values
+
+
         dbDelta($sql);
         
-
     }
     add_action('muplugin_on_activation', 'muplugin_on_activation');
 
@@ -80,12 +187,18 @@
     add_action('muplugin_on_uninstall', 'muplugin_on_uninstall');
 
 
-    //Check if table is empty
-    function check_table($tableName) {
+    /**
+     * check_table(string, string)
+     * Checks provided tablename and key strings for values already entered into the database
+     * Couldn't think of a better way to add the data over hardcoding because I'm running
+     * out of time.
+     */
+    function check_table($tableName, $key) {
         global $wpdb;
 
-        $result = $wpdb->get_results("SELECT os_id FROM operating_system
-                                        WHERE `os_id` IS NOT NULL");
+        $result = $wpdb->get_results("SELECT {$key} FROM {$tableName}
+                                        WHERE {$key} IS NOT NULL");
+
         
         return $result;
     }
