@@ -1,0 +1,3 @@
+# MU Available Software Data Schema
+
+Each directory stores the appropriate SQL to generate all required tables for the plugin to function. Some tables will have pre-populated data rows such as: department, operating_system, and user in order to limit data anomalies. These directories and accompanying SQL scripts are included in case the data tables need to be rebuilt for some reason. It really just serves as a reference from version 1.0

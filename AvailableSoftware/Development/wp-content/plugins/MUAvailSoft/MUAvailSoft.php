@@ -1,12 +1,14 @@
 <?php
 /**
  * Plugin Name: MU Available Software
+ * Plugin URI: https://www.marshall.edu/it/services/availablesoftware/
  * Description: Custom WP plugin to display available software packages for Marshall University Students, Faculty, and Staff. Also includes ability for admin to add/remove software packages and associated information from the WP admin page. Eliminates need for constant static updating.
  * 
  * Author: Benjamin Cayton - IT Admin, Student Assistant
  * Version: 1.0
  *  
  */
+    
 
     // exit if file is called directly
     if( ! defined('ABSPATH')) 
@@ -29,11 +31,6 @@
         //Include dependency for ajax handler functions
         require_once plugin_dir_path( __FILE__ ) . 'admin/ajax/ajax_functions.php';
     }
-
-
-
-
-
 
     /**
      * Must register style sheets and scripts to be inserted into the WP Admin header
@@ -59,6 +56,11 @@
     //Hook to implement adding scripts and styles to admin page.
 
     add_action( 'admin_enqueue_scripts', 'wpdocs_enqueue_custom_admin_style');
+
+    include_once dirname( __FILE__ ) . '/includes/activation.php';
+    register_activation_hook( __FILE__, 'muplugin_on_activation' );
+    register_uninstall_hook( __FILE__, 'muplugin_on_uninstall');
+    
 
 
 ?>
