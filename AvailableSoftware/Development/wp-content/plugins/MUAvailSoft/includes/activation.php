@@ -10,21 +10,7 @@
         if(! current_user_can( 'activate_plugins' )) return;
 
         //Require for dbDelta
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        $deptArray = array();
-
-        $fstream = fopen(dirname(__FILE__) . "/departments.txt", "r") or wp_die("Can't");
-
-        while(($line=fgets($fstream)) !== false) {
-            array_push($deptArray, $line);
-        }
-
-        fclose($depts);
-
-        wp_die(print_r($deptArray));
-        
-
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');     
         
         /* ------------------- CREATE ALL REQUIRED DATABASE TABLES ------------------ */
         
@@ -54,10 +40,41 @@
 
         //Department table creation
         $sql .= "CREATE TABLE `department` (
-                    `dept_id` int NOT NULL,
+                    `dept_id` int NOT NULL AUTO_INCREMENT,
                     `dept_name` varchar(75) NOT NULL,
                     PRIMARY KEY (`dept_id`)
                     ) {$collate};";
+
+        //Check department table for existing values
+        $table = "department";
+        $key = "dept_id";
+
+        $result = check_table($table, $key);
+        
+        if(count($result) == 0)
+        {
+            $sql .= "INSERT INTO `department` (`dept_name`) VALUES ";
+            //Read departments from text file in dir and insert them iteratively
+            $deptArray = array();
+
+            $fstream = fopen(dirname(__FILE__) . "/departments.txt", "r") or wp_die("Cannot read departments.txt file");
+            
+            while(($line=fgets($fstream)) !== false) {
+                array_push($deptArray, trim($line));
+            }
+
+            fclose($fstream);
+
+            for($i = 0; $i < sizeof($deptArray); $i++)
+            {
+                if($i == sizeof($deptArray) - 1) {
+                    $sql .= "('" . $deptArray[$i] . "');";
+                }
+                else {
+                    $sql .= "('" . $deptArray[$i] . "'),";
+                }
+            }
+        }
 
         //Operating system table creation
         $sql .= "CREATE TABLE `operating_system` (
@@ -108,11 +125,10 @@
                     `search_term` varchar(18) NOT NULL,
                     `soft_id` int NOT NULL,
                     PRIMARY KEY (`search_id`)
-                ) {$collate};";
+                ) {$collate}; ";
         //FK Constraints
         $sql .= "ALTER TABLE `search_terms`
-                    ADD CONSTRAINT `FK_st_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-                COMMIT;";
+                    ADD CONSTRAINT `FK_st_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE;";
 
         
         //Software alternative table creation
@@ -156,6 +172,8 @@
                     ADD CONSTRAINT `FK_ds_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE;
                 COMMIT;";
 
+        
+
 
         //Software platform table creation
         $sql .= "CREATE TABLE `software_platform` (
@@ -169,9 +187,6 @@
                     ADD CONSTRAINT `FK_sp_os_id` FOREIGN KEY (`os_id`) REFERENCES `operating_system` (`os_id`) ON DELETE CASCADE ON UPDATE CASCADE,
                     ADD CONSTRAINT `FK_sp_soft_id` FOREIGN KEY (`soft_id`) REFERENCES `software` (`soft_id`) ON DELETE CASCADE ON UPDATE CASCADE;
                 COMMIT;";
-
-        //Check department table for values
-
 
         dbDelta($sql);
         
