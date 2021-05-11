@@ -193,13 +193,38 @@
     }
     add_action('muplugin_on_activation', 'muplugin_on_activation');
 
-//Remove all tables and information related to plugin on uninstall
+
+    /**
+     * When deactivating in current form, plugin will remove all data associated
+     * with the data tables. Keeps db structure.
+     */
+    function muplugin_on_deactivate() {
+        if( ! current_user_can( 'activate_plugins' )) return;
+
+        //Require for dbDelta
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        //Delete info related to plugin db
+
+        global $wpdb;
+
+        $sql = "DROP TABLE dept_software;";
+        $sql .= "TRUNCATE TABLE department;";
+        
+        dbDelta($sql);
+
+
+    }
+    add_action('muplugin_on_deactivate', 'muplugin_on_deactivate');
+
+    //Remove all tables and information related to plugin on uninstall
     function muplugin_on_uninstall() {
         if( ! current_user_can( 'activate_plugins')) return;
         
         /* -------------------- REMOVE ALL CREATED PLUGIN TABLES -------------------- */
     }
     add_action('muplugin_on_uninstall', 'muplugin_on_uninstall');
+
+
 
 
     /**

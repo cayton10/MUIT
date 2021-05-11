@@ -59,6 +59,7 @@
 
     include_once dirname( __FILE__ ) . '/includes/activation.php';
     register_activation_hook( __FILE__, 'muplugin_on_activation' );
+    register_deactivation_hook( __FILE__ , 'muplugin_on_deactivate' );
     register_uninstall_hook( __FILE__, 'muplugin_on_uninstall');
     
 
