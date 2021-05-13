@@ -40,28 +40,4 @@ $ git pull
 I highly suggest creating another repo for moving this project forward. If not that, at least make changes on a new branch and make a PR to this repo.
 
 
-### Edit Software
-Edit software functions similar to adding software. It actually uses the same function in the adminjs.js file 
-``` javascript
-array = pullData();
-```
-to grab all the information from the form, wrap it into an object array, and send it to the database for processing via ajax and php scripts.
-
-## ToDo's:
-
-### Smart Searching (Predictive Text)
-
-As of <strong>2.19.21</strong> this functionality is working at 90% cap. 
-I still need to:
-- Style the dropdown divs
-- Style the anchor tags containing the DB keyword result
-- Fix the jQuery logic for adding the keyword to the list as a "button"
-
-### Download location
-
-Change wording for this link location. Make it clear that the information to enter should be the page containing the download link, not the link itself.
-
-### Department Table
-
-A list of departments will be needed to move forward with this feature.
 
