@@ -4,6 +4,8 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/wp-config.php');
     
     define('PATH_TO_CLASSES', dirname(__DIR__) . '/classes/');
+    //Version information
+    define('PLUGIN_VERSION', "version_1.0");
     
     spl_autoload_register(function($class) {
 
