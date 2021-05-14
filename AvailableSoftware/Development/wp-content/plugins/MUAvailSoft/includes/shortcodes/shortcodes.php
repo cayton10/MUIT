@@ -11,7 +11,7 @@ function list_all_software_sc() {
 
     ob_start();
 
-    printf(print_all_software());
+    echo(print_all_software());
     return ob_get_clean();
 }
 
