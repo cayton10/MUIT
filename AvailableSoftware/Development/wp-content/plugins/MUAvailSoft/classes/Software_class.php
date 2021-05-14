@@ -164,6 +164,21 @@
             return $results;
         }
 
+        /**
+         * Takes no parameters
+         * Returns basic software information for users to view.
+         */
+        public function getAllSoftware()
+        {
+            global $wpdb;
+            $query = "";
+            $query = "SELECT * FROM software
+                        ORDER BY soft_company";
+            $result = $wpdb->get_results($query);
+
+            return $result;
+        }
+
 
         /**
          * removeSoftware(int);

@@ -189,18 +189,6 @@
                 COMMIT;";
 
         dbDelta($sql);
-
-        //Create page
-        $saved_page_args = array(
-            'post_title' => __( 'Available Software', 'my-available-software'),
-            'post_content' => '[my-available-software]',
-            'post_status' => 'publish',
-            'post_type' => 'page'
-        );
-
-        $saved_page_id = wp_insert_post( $saved_page_args );
-
-        add_option( 'my_available_software_saved_page_id', $saved_page_id );
     }
     add_action('muplugin_on_activation', 'muplugin_on_activation');
 
@@ -227,7 +215,10 @@
     }
     add_action('muplugin_on_deactivate', 'muplugin_on_deactivate');
 
-    //Remove all tables and information related to plugin on uninstall
+    /**
+     * Self documenting:
+     * Run this script on uninstall...
+     */
     function muplugin_on_uninstall() {
         if( ! current_user_can( 'activate_plugins')) return;
         

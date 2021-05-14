@@ -18,8 +18,6 @@
         exit;
     }
 
-
-
     // if admin area
     if(is_admin())
     {
@@ -33,6 +31,10 @@
         //Include dependency for ajax handler functions
         require_once plugin_dir_path( __FILE__ ) . 'admin/ajax/ajax_functions.php';
     }
+
+    //Shortcodes for page markup / function
+    require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes/shortcodes.php';
+
 
     /**
      * Must register style sheets and scripts to be inserted into the WP Admin header
@@ -52,13 +54,15 @@
         //Custom js
         wp_register_script( 'custom_wp_admin_js', plugin_dir_url( __FILE__ ) . 'admin/js/adminjs.js');
         wp_enqueue_script( 'custom_wp_admin_js');
-        
     }
+    add_action('admin_enqueue_scripts', 'wpdocs_enqueue_custom_admin_style');
 
-    //Hook to implement adding scripts and styles to admin page.
-
-    add_action( 'admin_enqueue_scripts', 'wpdocs_enqueue_custom_admin_style');
-
+/* -------------------------------------------------------------------------- */
+/*        ADD SHORTCODE SECTION FOR FRONT FACING FUNCTIONALITY / DESIGN       */
+/* -------------------------------------------------------------------------- */
+    add_shortcode('software_list_all', 'list_all_software_sc'); 
+     
+    
     include_once dirname( __FILE__ ) . '/includes/activation.php';
     register_activation_hook( __FILE__, 'muplugin_on_activation' );
     register_deactivation_hook( __FILE__ , 'muplugin_on_deactivate' );
